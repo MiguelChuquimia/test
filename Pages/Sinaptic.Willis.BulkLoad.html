@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <script src="../SiteAssets/js/jquery-3.4.1.min.js"></script>
+
+    <script src="../SiteAssets/js/bootstrap.min.js"></script>
+
+    <script src="../SiteAssets/js/popper.min.js"></script>
+
+    <script src="../SiteAssets/js/DataTables/datatables.min.js"></script>
+
+    <script src="../SiteAssets/js/DataTables/vfs_fonts.js"></script>
+
+    <script src="../SiteAssets/js/DataTables/pdfmake.min.js"></script>
+
+    <script src="../SiteAssets/js/DataTables/jszip.min.js"></script>
+
+    <script src="../SiteAssets/js/DataTables/DataTables-1.10.20/js/jquery.dataTables.min.js"></script>
+
+    <script src="../SiteAssets/js/DataTables/Buttons-1.6.1/js/dataTables.buttons.min.js"></script>
+
+    <script src="../SiteAssets/js/DataTables/Buttons-1.6.1/js/buttons.flash.min.js"></script>
+
+    <script src="../SiteAssets/js/DataTables/Buttons-1.6.1/js/buttons.html5.min.js"></script>
+
+    <script src="../SiteAssets/js/DataTables/Buttons-1.6.1/js/buttons.print.min.js"></script>
+
+    <script src="https://unpkg.com/read-excel-file@4.x/bundle/read-excel-file.min.js"></script>
+
+    <script>
+        function agregarMetaEtiquetas() {
+            var metaCacheControl = document.createElement('meta');
+            var metaPragma = document.createElement('meta');
+            var metaExpires = document.createElement('meta');
+
+            metaCacheControl.setAttribute('http-equiv', 'Cache-Control');
+            metaCacheControl.setAttribute('content', 'no-cache, no-store, must-revalidate');
+            metaPragma.setAttribute('http-equiv', 'Pragma');
+            metaPragma.setAttribute('content', 'no-cache');
+            metaExpires.setAttribute('http-equiv', 'Expires');
+            metaExpires.setAttribute('content', '0');
+
+            var head = document.head || document.getElementsByTagName('head')[0];
+
+            head.appendChild(metaCacheControl);
+            head.appendChild(metaPragma);
+            head.appendChild(metaExpires);
+        }
+
+        agregarMetaEtiquetas();
+    </script>
+
+    <link rel="stylesheet" href="../SiteAssets/css/Sinaptic.Willis.Renewal.css">
+
+    <link rel="stylesheet" href="../SiteAssets/css/bootstrap.min.css">
+
+    <link rel="stylesheet" href="../SiteAssets/css/FontAwesome/css/all.min.css">
+
+    <link rel="stylesheet" href="../SiteAssets/js/DataTables/datatables.min.css">
+
+    <link rel="stylesheet" href="../SiteAssets/js/DataTables/Buttons-1.6.1/css/buttons.dataTables.min.css">
+
+    <title>Bulk Load</title>
+
+</head>
+
+<body class="body">
+    <div>
+        <h1>Bulk Load</h1>
+    </div>
+
+    <div id="divCards">
+        <ul>
+            <li class="tab-item active" target-wrapper="first-dynamic-table" target-tab="step1">Step 1</li>
+            <li class="tab-item" target-wrapper="first-dynamic-table" target-tab="step2">Step 2</li>
+            <li class="tab-item" target-wrapper="first-dynamic-table" target-tab="step3">Step 3</li>
+        </ul>
+        <div id="first-dynamic-table">
+            <div class="tab-content active" id="step1" style="content-visibility: auto; overflow: auto;">
+                <h4>Select an Excel file</h4>
+                <input type="file" id="input" />
+                <table id="tbl-data" class="table table-bordered" style="margin-top: 1%; width: max-content;"></table>
+            </div>
+            <div class="tab-content" id="step2">
+                <button id="btnBulkLoad" onclick="clickBulkLoad(event)" class="btn btn-outline-primary">Process</button>
+                <div class="text-center" id="spinnerBulkLoad">
+                    <div class="spinner-border" role="status">
+                        <span class="sr-only">Loading...</span>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-content" id="step3">
+                <h2>Process result</h2>
+                <!-- <table id="tbl-result" class="table table-bordered" style="margin-top:1%;"></table> -->
+                <table id="tbl-result" class="display nowrap" style="width:100%">
+                    <thead>
+                        <tr>
+                            <th>Reference</th>
+                            <th>Date</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tbody-tbl-result"></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
+        crossorigin="anonymous"></script>
+
+</body>
+
+<script src="../SiteAssets/js/Sinaptic.Willis.BulkLoad.js"></script>
+<script src="../SiteAssets/js/Sinaptic.Willis.Service.js"></script>
+
+</html>

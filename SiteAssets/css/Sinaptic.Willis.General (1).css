@@ -1,0 +1,410 @@
+#s4-titlerow {
+    display: none !important;
+}
+
+table.dataTable tbody th, table.dataTable tbody td {
+    padding: 8px 10px;
+    font-size: 12px;
+}
+
+.modal-header.popup-header h1 {
+    color: white;
+    font-size: 19px;
+}
+
+#phasesEoC
+	{
+	    margin-left: 16px;
+    font-weight: 400;
+	
+}
+
+#docEoC
+	{
+	    margin-left: 16px;
+    font-weight: 400;
+	
+}
+	
+#divDocEoC{
+	    margin-left: 17px;
+		padding-top: 7px;
+		font-size: 14px;
+
+}
+	
+#divDocEoC label{
+	color: #133a84;
+}
+
+#divPhasesEoc
+	{
+	margin-left: 17px;
+    padding-top: 16px;
+    font-size: 14px;
+}
+
+#divPhasesEoc label
+	{
+	color: #133a84;
+}
+
+#modalTitle
+{
+	color: white;
+    font-size: 20px;
+}
+
+.table-endorsement {
+    text-align: center;
+    color: #760daf !important;
+    border-bottom-width: 2px;
+    border-bottom-style: sol
+}
+
+.containerTitleSections{
+margin-top: 1%;
+    border-bottom-color: #979598b8;
+    border-bottom-width: 1px;
+    border-bottom-style: solid;
+
+}
+
+#searchTask
+{
+    width: 13%;
+    height: 26px;
+}
+
+#bAnalyst{
+
+    margin-left: 5%;
+    width: 10%;
+    color: white;
+    background-color: #9742b7;
+    font-size: 12px;
+	
+	}
+
+#bSuspend{
+
+    width: 120px;
+    background-color: #777777c9;
+    color: white;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+#bCancel{
+
+    width: 120px;
+    background-color: #ff0000a8;
+    color: white;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+#bActivate{
+
+    width: 120px;
+    background-color: #0438a7a3;
+    color: white;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+#mComment{
+
+  height: 32px;
+}
+
+.subCommandsContainer
+{
+	        text-align: left;
+    padding: 10px;
+    background-color: #a9a9a94f;
+    margin-bottom: 9px;
+}
+
+.div-separator {
+    border-top-style: dashed;
+    border-top-width: thin;
+}
+
+
+
+.screen-header {
+    background-color: whitesmoke;
+}
+
+.search-btn
+{
+        padding: 7px;
+}
+.general-header {
+    background-image: url("../img/logo accounts.png")!Important;
+    width: 100%;
+    height: 117px;
+    margin-left: 1.0%;
+    margin-right: 1.3%;
+}
+
+.screen-title {
+    color: #f9f9f9;
+    /* background-color: white; */
+    width: 20%;
+    font-size: 15px;
+    margin-top: 20px;
+    border-bottom-color: gray;
+    /* font-weight: 700; */
+    border-bottom-width: 1px;
+    border-bottom-style: double;
+}
+
+.screen-subtitle {
+    color: #eee;
+    font-size: 22px;
+    width: 25%;
+    font-weight: 700;
+}
+
+.button-general {
+    background-color: #760daf;
+    border: none;
+    color: white;
+    padding: 12px 16px;
+    font-size: 16px;
+    cursor: pointer;
+  }
+  
+.button-general:hover {
+   background-color: purple;
+}
+
+.button-table {
+    background-color: #760daf;
+    border: none;
+}
+
+.button-table:hover {
+   background-color: purple;
+}
+
+.button-action {
+    background-color: #760daf;
+    border: none;
+    color: white;
+    padding: 12px 16px;
+    font-size: 16px;
+    cursor: pointer;
+    margin-left: 2%;
+    margin-top: 2%;
+    margin-bottom: 2%;
+}
+  
+.button-action:hover {
+   background-color: purple;
+}
+
+.modal-data-task {
+    margin: 1%;
+    border-style: ridge;
+    text-align: center;
+}
+
+.modal-label-data {
+    color: #760daf;
+}
+
+.modal-select {
+    margin-top: 5%;
+}
+
+.modal-comments {
+    border-style: ridge;
+    height: 100px;
+    overflow: auto;
+    margin-top: 5%;
+    width: 100%;
+}
+
+.modal-comments-summary {
+    border-style: ridge;
+    height: 200px;
+    overflow: auto;
+    margin-top: 5%;
+    width: 100%;
+}
+
+.button:hover {
+    background-color: #760daf;
+    color: white;
+}
+
+.button-modal{
+    background-color: #9742b7;
+    color: white;
+    font-size: 13px;
+    width: 135px;
+}
+
+.tasksButtonsStyle
+	{
+	    width: 100%;
+    background-color: #9742b7;
+    color: white;
+    font-size: small;
+    margin-top: 20px;
+}
+	
+	
+.eocStatusHeader
+	{
+	font-size: 20px;
+    background-color: #483d8bad;
+    color: white;
+    width: 102%;
+    margin-left: -9px;
+    padding-left: 7px;
+    margin-top: 14px;
+	
+	}
+	
+
+	
+.eocInfoContent label{
+	color: #133a84;
+	
+	}
+	
+
+
+.button-modal:hover {
+    background-color: purple;
+}
+
+.label-doc {
+    margin: 0px 10px 0px 10px;
+    font-weight: normal;
+}
+
+.li-modal {
+    font-weight: bold;
+}
+
+.modal-comment-content {
+    margin: 1%;;
+}
+
+.modal-header-bar {
+    align-self: center;
+}
+
+.label-comment {
+    font-weight:normal
+}
+
+.modal-button {
+    margin-top: 5%;
+    text-align: center;
+}
+
+.modal-label-content-info {
+    margin-top: 5%;
+}
+
+
+.modal-label-title {
+    font-size: small;
+}
+
+ .modal-label-info {
+    font-size: small;
+    font-weight: normal;
+}
+
+
+
+.popup-header
+{
+	background-color: #483d8bad;
+    color: white!Important;
+}
+
+
+.cardContent{
+    cursor: pointer;
+    width: 20% !important;
+}
+
+.cardBody {
+       background: #ab5cd6;
+    color: white;
+    padding: 12px 0px;
+    border: 1px solid transparent;
+    text-align: center;
+}
+
+.card-columns{
+       margin-top: 2%;
+    border-top: hidden !important;
+    display: none;}
+
+.cardImg{
+    font-size: xx-large;
+    padding: 0px;
+}
+
+.cardFooter {
+    text-align: center;
+    background: #fefaff;
+    position: relative;
+    min-height: 50px;
+    color: black;
+}
+
+.cardTitle {
+    font-size: 14px;
+    margin: 0;
+    padding-top: 14px;
+    color: black;
+}
+
+
+
+
+
+
+.button-filter {
+    background-color: white;
+    color: #760daf;
+}
+
+.button-filter:hover {
+   background-color: whitesmoke;
+   border-color: #760daf;
+}
+
+.loader {
+    border: 16px solid #f3f3f3; /* Light grey */
+    border-top: 16px solid #760daf; /* Blue */
+    width: 120px;
+    height: 120px;
+  }
+
+  .modal-LoadMe {
+      text-align: center;
+  }
+
+.img-container-willis {
+    float: right;
+    padding-right: 30px;
+}
+
+.img-header-willis {
+    width: 130px;
+}
+
+.title-willis{
+
+}

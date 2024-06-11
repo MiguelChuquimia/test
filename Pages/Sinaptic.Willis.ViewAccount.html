@@ -1,0 +1,697 @@
+﻿<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <script src="../SiteAssets/js/jquery-3.4.1.min.js"></script>
+
+    <!--<script src="../SiteAssets/js/bootstrap.min.js"></script>-->
+    <!--<script src="../SiteAssets/js/popper.min.js"></script>-->
+
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.bundle.min.js"></script>
+    <script src="../SiteAssets/js/bootstrap-select.min.js"></script>
+
+    <script src="../SiteAssets/js/DataTables/datatables.min.js"></script>
+
+    <script src="../SiteAssets/js/DataTables/vfs_fonts.js"></script>
+
+    <script src="../SiteAssets/js/DataTables/pdfmake.min.js"></script>
+
+    <script src="../SiteAssets/js/DataTables/jszip.min.js"></script>
+
+    <script src="../SiteAssets/js/DataTables/DataTables-1.10.20/js/jquery.dataTables.min.js"></script>
+
+    <script src="../SiteAssets/js/DataTables/Buttons-1.6.1/js/dataTables.buttons.min.js"></script>
+
+    <script src="../SiteAssets/js/DataTables/Buttons-1.6.1/js/buttons.flash.min.js"></script>
+
+    <script src="../SiteAssets/js/DataTables/Buttons-1.6.1/js/buttons.html5.min.js"></script>
+
+    <script src="../SiteAssets/js/DataTables/Buttons-1.6.1/js/buttons.print.min.js"></script>
+
+    <script src="../SiteAssets/js/Dropzone/dropzone.js"></script>
+
+    <script>
+        function agregarMetaEtiquetas() {
+            var metaCacheControl = document.createElement('meta');
+            var metaPragma = document.createElement('meta');
+            var metaExpires = document.createElement('meta');
+
+            metaCacheControl.setAttribute('http-equiv', 'Cache-Control');
+            metaCacheControl.setAttribute('content', 'no-cache, no-store, must-revalidate');
+            metaPragma.setAttribute('http-equiv', 'Pragma');
+            metaPragma.setAttribute('content', 'no-cache');
+            metaExpires.setAttribute('http-equiv', 'Expires');
+            metaExpires.setAttribute('content', '0');
+
+            var head = document.head || document.getElementsByTagName('head')[0];
+
+            head.appendChild(metaCacheControl);
+            head.appendChild(metaPragma);
+            head.appendChild(metaExpires);
+        }
+
+        agregarMetaEtiquetas();
+    </script>
+
+    <link rel="stylesheet" href="../SiteAssets/css/bootstrap.min.css">
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/css/bootstrap-select.css" />
+
+    <link rel="stylesheet" href="../SiteAssets/css/FontAwesome/css/all.min.css">
+
+    <link rel="stylesheet" href="../SiteAssets/css/Sinaptic.Willis.ViewAccount.css">
+
+    <link rel="stylesheet" href="../SiteAssets/css/Sinaptic.Willis.General.css">
+
+    <link rel="stylesheet" href="../SiteAssets/js/DataTables/datatables.min.css">
+
+    <link rel="stylesheet" href="../SiteAssets/js/Dropzone/dropzone.css">
+
+    <link rel="stylesheet" href="../SiteAssets/js/DataTables/Buttons-1.6.1/css/buttons.dataTables.min.css">
+
+    <title>View Accounts</title>
+
+</head>
+<div class="screen-body">
+    <div class="row row-content-header">
+        <div class="accounts-header">
+
+            <div class="screen-subtitle" id="subtitle"></div>
+            <div class="view-account-commands">
+                <button id="bEditAccount" type="button" class="button-account" onclick="clickEditAccount()">
+                    <i class="far fa-edit"></i>
+                </button>
+                <button id="bNewEndorsement" type="button" class="button-account" onclick="clickNewEndorsement()">
+                    New
+                    Endorsement <i class="fas fa-plus-circle"></i>
+                </button>
+                <button type="button" id="bRequestProcess" class="button-account" onclick="clickRequestProcess()">
+                    Request
+                    Process <i class="fas fa-hand-pointer"></i>
+                </button>
+                <button id="bRenewal" type="button" class="button-account" onclick="clickRenewal()">
+                    Renewal <i class="fas fa-sync-alt"></i>
+                </button>
+                <button id="bNewClaim" type="button" class="button-account" onclick="clickNewClaim()">
+                    New Claim <i class="far fa-plus-square"></i>
+                </button>
+                <button id="bNTU" type="button" class="button-account" onclick="clickNTU()">
+                    NTU <i class="far fa-times-circle"></i>
+                </button>
+                <button id="bSummary" type="button" class="button-account">
+                    Summary <i class="fas fa-book-open"></i>
+                </button>
+                <button id="bGoHome" type="button" class="button-account" onclick="goHome()">
+                    <i class="fas fa-home"></i>
+                </button>
+                <button id="bRefresh" type="button" class="button-account" onclick="refreshPage()">
+                    <i class="fas fa-sync"></i>
+                </button>
+            </div>
+            <div class="img-container-willis">
+                <img src="../SiteAssets/img/logo.png" class="img-header-willis" alt="Alternate Text" />
+            </div>
+        </div>
+    </div>
+
+    <div class="row-info-account">
+        <i class="far fa-eye icon-eye"></i>
+        <h2 class="info-account" id="referenceTitle"></h2>
+    </div>
+
+    <div class="row">
+        <div class="form-group form-account">
+
+            <div class="form-group required row">
+                <div class="col-sm-6">
+                    <label for="office" class="control-label">Office</label>
+                    <!--<input type="text" id="office" class="form-control input-willis" disabled>-->
+                    <select id="office" class="form-control input-willis" onchange="changeOffice()" disabled></select>
+                </div>
+                <div class="col-sm-6">
+                    <label for="team" class="control-label">Team</label>
+                    <select id="team" class="form-control input-willis" disabled></select>
+                </div>
+            </div>
+
+            <div class="form-group required row">
+
+                <div class="col-sm-6">
+                    <label for="linebusiness" class="control-label">Global Line of Business</label>
+                    <select id="linebusiness" class="form-control input-willis" disabled></select>
+
+
+                </div>
+                <div class="col-sm-6">
+                    <label for="branch" class="control-label">Ramo</label>
+                    <select id="branch" class="form-control input-willis" disabled>
+                    </select>
+
+                </div>
+            </div>
+
+            <div class="form-group required row">
+                <div class="col-sm-6">
+                    <label for="subBranch" class="control-label">Sub-ramo</label>
+                    <select id="subBranch" class="form-control input-willis" disabled>
+                    </select>
+
+                </div>
+                <div class="col-sm-6">
+
+                </div>
+            </div>
+
+            <div class="form-group required row">
+                <div class="col-sm-6">
+                    <label for="renewable" class="control-label">Renewable</label>
+                    <select id="renewable" class="form-control input-willis" disabled>
+                        <option value="OneOff">One Off</option>
+                        <option value="Renewable">Renewable</option>
+                    </select>
+
+                </div>
+                <div class="col-sm-6">
+                    <label for="typeofmovement" class="control-label">Type of movement</label>
+                    <select id="typeofmovement" class="form-control input-willis" onchange="changeTypeMovement()"
+                        disabled></select>
+                </div>
+            </div>
+
+
+            <div class="form-group required row">
+                <div class="col-sm-6">
+                    <label for="inception" class="control-label">Inception</label>
+                    <input type="date" id="inception" class="form-control input-willis" disabled>
+                </div>
+                <div class="col-sm-6">
+                    <label for="businessSource">Business Source</label>
+                    <select id="businessSource" class="form-control input-willis" disabled></select>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <div class="col-sm-6">
+                    <label for="businessCountry">Business Country</label>
+                    <select id="businessCountry" class="form-control input-willis" disabled></select>
+                </div>
+                <div class="col-sm-6">
+                    <label for="ukReference">Willis UK Reference</label>
+                    <input type="text" id="ukReference" class="form-control input-willis" disabled>
+                    <label for="currency">Currency</label>
+                    <select id="currency" class="form-control input-willis" disabled></select>
+                </div>
+            </div>
+            <div class="form-group required row">
+                <div class="col-sm-6">
+                    <label for="accountManager">Main Responsible</label>
+                    <select id="accountManager" class="form-control input-willis" disabled></select>
+                </div>
+                <div class="col-sm-6">
+                    <label for="originalInsured" class="control-label">Original Insured</label>
+                    <input type="text" id="originalInsured" class="form-control input-willis" disabled>
+                </div>
+            </div>
+            <div class="form-group required row">
+                <div class="col-sm-6" id="div-assignedTeam">
+                    <label for="assginedTeam" class="control-label">Work team</label>
+                    <select id="assginedTeam" class="form-control input-willis selectpicker" multiple
+                        data-live-search="true" enabled>
+                    </select>
+                </div>
+                <div class="col-sm-6">
+                    <label for="typeplacement" class="control-label">Type of Placement</label>
+                    <select id="typeplacement" class="form-control input-willis" disabled>
+                        <option value="P1">P1</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group required row">
+                <div class="col-sm-6">
+                    <label for="client" class="control-label">Client</label>
+                    <select id="client" class="form-control input-willis" disabled></select>
+                    <!--<label for="glob" class="control-label">Global Line of Business</label>
+    <select id="glob" class="form-control input-willis" disabled>
+        <option value="Aerospace">Aerospace</option>
+        <option value="Construction">Construction</option>
+        <option value="Finex">Finex</option>
+        <option value="Marine">Marine</option>
+        <option value="Natural Resources">Natural Resources</option>
+        <option value="P&C">P&C</option>
+    </select>-->
+                </div>
+                <div class="col-sm-6">
+                    <label for="tpp">TPP</label>
+                    <select id="tpp" class="form-control input-willis form-select selectpicker"
+                        data-live-search="true"></select>
+                    <a href="#linkAddTpp" data-target="#modalNewTPP" data-toggle="modal" class="link-newTPP"
+                        role="button">If you can't find the TPP you can add one by clicking here</a>
+
+                </div>
+            </div>
+
+            <div class="form-group required row">
+                <div class="col-sm-6">
+                    <label for="receptionDate">Reception Date</label>
+                    <input type="date" id="receptionDate" class="form-control input-willis" disabled>
+                    <!--<input type="text" id="tpp" class="form-control input-willis" disabled>-->
+
+                </div>
+                <div class="col-sm-6">
+                    <label for="core">CORE</label>
+                    <input type="text" id="core" class="form-control input-willis" disabled>
+                </div>
+            </div>
+
+            <!--<div class="form-group row">
+        <div class="col-sm-6">
+
+        </div>
+        <div class="col-sm-6">
+
+        </div>
+    </div>-->
+
+            <div class="form-group row">
+                <div class="col-sm-6">
+                    <label for="status">Status</label>
+                    <select id="status" class="form-control input-willis" disabled>
+                    </select>
+                </div>
+                <div class="col-sm-6">
+                    <!--<label for="incomeUSD">Income USD</label>
+    <input type="text" id="incomeUSD" class="form-control input-willis" disabled>-->
+                    <label for="comments">Comments</label>
+                    <textarea type="text" id="comments" class="form-control" disabled></textarea>
+                </div>
+            </div>
+
+            <!--<div class="form-group row">
+        <div class="col-sm-6">
+            <label for="grossPremiumUSD">Gross Premium USD</label>
+            <input type="text" id="grossPremiumUSD" class="form-control input-willis" disabled>
+        </div>
+        <div class="col-sm-6">
+
+        </div>
+    </div>-->
+
+
+            <div class="form-group row">
+                <div class="col-sm-6">
+
+                </div>
+                <div class="col-sm-6">
+
+                </div>
+            </div>
+
+
+
+
+
+            <div class="form-group required row">
+                <div class="col-sm-12">
+                    <label for="paymentClause" class="control-label">Do you have a payment clause that allows the market
+                        to drop the coverage without notice?</label>
+                    <select id="paymentClause" class="form-control input-willis" onchange="changePaymentClause()">
+                        <option value=""></option>
+                        <option value="0">No</option>
+                        <option value="1">Si</option>
+                    </select>
+                </div>
+            </div>
+
+
+            <div class="form-group required row">
+                <div id="divFirstDueDate" class="col-sm-6">
+                    <label for="firstDueDate">First due date</label>
+                    <input type="date" id="firstDueDate" class="form-control input-willis">
+                </div>
+                <div class="col-sm-6">
+                    <label for="status" class="control-label"> Client’s e-mail</label>
+                    <textarea type="text" id="contactMails" class="form-control" disabled></textarea>
+                </div>
+
+            </div>
+
+
+            <div class="row-action">
+                <button id="bActionSave" type="button" class="button-action" onclick="clickSave()">
+                    Save <i class="far fa-save"></i>
+                </button>
+                <button id="bActionReset" type="button" class="button-action" onclick="clickReset(true)">
+                    Reset <i class="far fa-trash-alt"></i>
+                </button>
+                <button id="bActionCancel" type="button" class="button-action" onclick="clickCancel()">
+                    Cancel <i class="far fa-times-circle"></i>
+                </button>
+            </div>
+        </div>
+        <div class="column">
+
+            <div class="col-grl" id="tableEndorsement">
+                <div class="column-grl">
+                    <div style="margin-top: 1%;">
+                        <h4 class="title-col">Endorsement list</h4>
+                    </div>
+                    <div class="table-responsive" style="margin-top: 2%;">
+                        <table class="table">
+                            <thead class="table-borderless table-endorsement">
+                                <tr>
+                                    <th scope="col">Reference</th>
+                                    <th scope="col">Inception</th>
+                                    <th scope="col">Status</th>
+                                    <th scope="col"></th>
+                                </tr>
+                            </thead>
+                            <tbody id="tEndorsementList" style="text-align: center;"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="col-grl" id="tableClaims" style="margin-top: 5%;">
+                <div class="column-grl">
+                    <div style="margin-top: 1%;">
+                        <h4 class="title-col">Claims list</h4>
+                    </div>
+                    <div class="table-responsive" style="margin-top: 2%;">
+                        <table class="table">
+                            <thead class="table-borderless table-endorsement">
+                                <tr>
+                                    <th scope="col">Reference</th>
+                                    <th scope="col">Date of Occurrence</th>
+                                    <th scope="col">Task</th>
+                                    <th scope="col">Description</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tClaimsList" style="text-align: center;"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div style="height: 50px;"></div>
+</div>
+
+
+<div id="slideOut">
+    <!--   // Tab -->
+    <div class="slideOutTab">
+        <div>
+            <p>Attach File</p>
+        </div>
+    </div>
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title">Attach Documents</h5>
+        </div>
+        <div class="modal-body">
+
+            <!--<div style="text-align: end;">
+                        <button id="bAttach" type="button" class="button-attach" onclick="clickAttach()">
+                            Attach
+                        </button>
+                    </div>-->
+
+
+            <div id="divDropzone">
+                <!--<formdropzone type="file" webkitdirectory="true" action="#" id="dropzone"
+                                  class="dropzone dz-clickable" style="displadroy: contents;">
+                        <div class="dz-default dz-message">
+                            <span>Drag or click to select the file to upload</span>
+                        </div>
+                    </formdropzone>-->
+
+                <div id="dropzoneCommon" class="dropzone"></div>
+                <div style="text-align: center;">
+                    <button id="bUploadFile" type="button" class="button-file"> Confirm File/s </button>
+                    <button id="bDiscardFile" type="button" class="button-file"> Discard File/s </button>
+                </div>
+            </div>
+
+        </div>
+        <div class="modal-footer"> </div>
+    </div>
+</div>
+
+
+
+
+<div id="slideOutList">
+    <!--   // Tab -->
+    <div class="slideOutTabList">
+        <div>
+            <p>View Documents</p>
+        </div>
+    </div>
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title">Related Documents</h5>
+
+        </div>
+        <div class="modal-body">
+            <div id="overlay">
+                <div class="w-100 d-flex justify-content-center align-items-center">
+                    <div class="spinner"></div>
+                </div>
+            </div>
+            <input type="text" id="docSearchInput" onkeyup="searchDocs()" placeholder="Search for document names..">
+            <ol class="breadcrumb"></ol>
+            <div class="table-responsive" style="margin-top: 2%;">
+                <table class="table" id="tbRelatedDocuments">
+                    <tbody id="tRelatedDocuments"></tbody>
+                </table>
+            </div>
+        </div>
+        <div class="modal-footer"> </div>
+    </div>
+</div>
+<!-- // Scroll content -->
+
+
+<div class="modal fade" id="modalNewTPP" data-backdrop="static" data-keyboard="false" tabindex="-1"
+    aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel">Add new TPP</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="alert alert-warning" role="alert" id="alertTPPMessage">
+
+                </div>
+                <input type="text" id="txtNewTPP" class="form-control input-willis">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" id="btnAddNewTPP" class="btn btn-primary">Save</button>
+            </div>
+        </div>
+    </div>
+
+</div>
+<div class="modal fade" id="mConfirm" tabindex="-1" role="dialog" aria-labelledby="ModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header popup-header">
+                <h5 class="modal-title">Confirm</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" id="mMsjConfirmar"></div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal" id="modal-btn-yes">Yes</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal" id="modal-btn-no">No</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<div class="modal fade" id="modalSummary" aria-hidden="true" style="opacity: initial; overflow: auto;">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header popup-header">
+                <h1 class="modal-title">Process Summary </h1>
+                <button type="button" class="close" aria-label="Close" data-dismiss="modal">
+                    <span aria-hidden="true">X</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-5">
+                        <div class="modal-label-content-info">
+                            <label class="title-section">Account/Endorsement Information</label>
+                        </div>
+                        <div class="modal-label-content-info">
+                            <label class="modal-label-title">Reference</label><br>
+                            <a class="modal-label-info" id="mSummaryReference"></a>
+                        </div>
+                        <div class="modal-label-content-info">
+                            <label class="modal-label-title">Insured</label><br>
+                            <label class="modal-label-info" id="mSummaryInsured"></label>
+                        </div>
+                        <!--<div class="modal-label-content-info">
+                                <label class="modal-label-title">Business line</label><br>
+                                <label class="modal-label-info" id="mSummaryBusinessLine"></label>
+                            </div>-->
+                        <div class="modal-label-content-info">
+                            <label class="modal-label-title">Client</label><br>
+                            <label class="modal-label-info" id="mSummaryClient"></label>
+                        </div>
+                        <div class="modal-label-content-info">
+                            <label class="modal-label-title">Inception date</label><br>
+                            <label class="modal-label-info" id="mSummaryInception"></label>
+                        </div>
+                        <div class="modal-label-content-info">
+                            <label class="modal-label-title">Broker assigned</label><br>
+                            <label class="modal-label-info" id="mSummaryBroker"></label>
+                        </div>
+
+                        <div class="modal-label-content-info" id="divSummaryReason">
+                            <label class="modal-label-title">Process status motive</label><br>
+                            <label class="modal-label-info" id="mSummaryReason"></label>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="modal-label-content-info">
+                            <label class="title-section">Current Tasks Process</label>
+                        </div>
+                        <div class="modal-label-content-info">
+                            <label class="modal-label-info">Process status: </label>
+                            <label class="modal-label-info" id="mSummaryStatus"></label>
+                        </div>
+                        <div class="modal-label-content-info">
+                            <h4 class="title-branch"><i class="fa fa-cogs" aria-hidden="true"></i> Billing Process </h4>
+                            <label class="modal-label-info" id="mSummaryBillingFlowType"></label>
+                            <label class="modal-label-info" id="mSummaryBillingTaskStatus"></label><br />
+                            <label class="modal-label-info">Assigned To:</label>
+                            <label class="modal-label-info" id="mSummBillingAssignedTo"></label>
+
+                        </div>
+                        <div class="modal-label-content-info" id="divSummaryBillingTaskStatusReason">
+                            <label class="modal-label-info">Task status motive: </label>
+                            <label class="modal-label-info" id="mSummaryBillingTaskStatusReason"></label>
+                        </div>
+                        <div class="modal-label-content-info" id="mSummaryBillingTaskComment">
+                            <label class="modal-label-info"></label>
+                        </div>
+                        <!--<div class="div-separator"></div>-->
+                        <div class="modal-label-content-info">
+                            <h4 class="title-branch"><i class="fa fa-cogs" aria-hidden="true"></i> EoC Process </h4>
+                            <label class="modal-label-info" id="mSummaryEoCFlowType"></label>
+                            <label class="modal-label-info" id="mSummaryEoCTaskStatus"></label><br />
+                            <label class="modal-label-info">Assigned To:</label>
+                            <label class="modal-label-info" id="mSummEoCAssignedTo"></label>
+                        </div>
+                        <div class="modal-label-content-info" id="divSummaryEoCTaskStatusReason">
+                            <label class="modal-label-info">Task status motive: </label>
+                            <label class="modal-label-info" id="mSummaryEoCTaskStatusReason"></label>
+                        </div>
+                        <div class="modal-label-content-info">
+                            <label class="modal-label-info" id="mSummaryEoCTaskComment"></label>
+                        </div>
+                        <div class="modal-label-content-info">
+                            <h4 class="title-branch"><i class="fa fa-comments" aria-hidden="true"></i> Comments </h4>
+                        </div>
+                        <div class="modal-comments-summary" id="mSummaryComments"></div>
+                    </div>
+                </div>
+
+                <div id="divSummaryDocuments">
+                    <div href="#collapseDocuments" data-toggle="collapse" class="eocStatusHeader">
+                        <div class="eocTitleHeader" style="cursor: pointer;">
+                            <label style="cursor: pointer;">Documents Information</label>
+                            <i class="fas fa-sort-down">
+
+                            </i>
+                        </div>
+                    </div>
+                    <div id="collapseDocuments" class="collapse documents-info-summary">
+                        <div class="row list-documents">
+                            <div class='col'>Title Document</div>
+                            <div class='col'>N/A</div>
+                            <div class='col'>Pending</div>
+                            <div class='col'>OK</div>
+                        </div>
+                        <ul id="documentList" class="list-group">
+                        </ul>
+
+                    </div>
+                </div>
+
+                <div id="divSummaryEndorsements">
+                    <div class="eocStatusHeader">
+                        <div class="eocTitleHeader">
+                            <label>Endorsements Summary</label>
+                        </div>
+                    </div>
+                </div>
+                <div id="divSummaryProcessLog">
+                    <div href="#collapseProcessLog" data-toggle="collapse" class="eocStatusHeader">
+                        <div class="eocTitleHeader" style="cursor: pointer;">
+                            <label style="cursor: pointer;">Process Log</label>
+                            <i class="fas fa-sort-down"></i>
+                        </div>
+                    </div>
+                    <div id="collapseProcessLog" class="collapse"></div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="button-modal" data-dismiss="modal"
+                    onclick="ClickCancelSummary('Accounts')">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="errorMsgModal" aria-hidden="true" style="opacity: initial; overflow: auto;">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header popup-header">
+                <h5 class="modal-title">System Message</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p id="error"></p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal" id="loadMe" tabindex="-1" role="dialog" aria-labelledby="ModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="row">
+            <div class="modal-body modal-LoadMe">
+                <div class="loader spinner-border">
+
+                </div>
+            </div>
+        </div>
+        <div class="row">
+
+            <strong id="spinnerMsg"></strong>
+        </div>
+    </div>
+</div>
+
+<script src="../SiteAssets/js/Sinaptic.Willis.ViewAccount.js"></script>
+<script src="../SiteAssets/js/Sinaptic.Willis.Service.js"></script>
+
+</html>

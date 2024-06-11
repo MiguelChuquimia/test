@@ -1,0 +1,899 @@
+﻿<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <script src="../SiteAssets/js/jquery-3.4.1.min.js"></script>
+
+    <script src="../SiteAssets/js/popper.min.js"></script>
+
+    <script src="../SiteAssets/js/bootstrap.min.js"></script>
+
+    <script src="../SiteAssets/js/DataTables/datatables.min.js"></script>
+
+    <script src="../SiteAssets/js/DataTables/vfs_fonts.js"></script>
+
+    <script src="../SiteAssets/js/DataTables/pdfmake.min.js"></script>
+
+    <script src="../SiteAssets/js/DataTables/jszip.min.js"></script>
+
+    <script src="../SiteAssets/js/DataTables/DataTables-1.10.20/js/jquery.dataTables.min.js"></script>
+
+    <script src="../SiteAssets/js/DataTables/Buttons-1.6.1/js/dataTables.buttons.min.js"></script>
+
+    <script src="../SiteAssets/js/DataTables/Buttons-1.6.1/js/buttons.flash.min.js"></script>
+
+    <script src="../SiteAssets/js/DataTables/Buttons-1.6.1/js/buttons.html5.min.js"></script>
+
+    <script src="../SiteAssets/js/DataTables/Buttons-1.6.1/js/buttons.print.min.js"></script>
+
+    <script>
+        function agregarMetaEtiquetas() {
+            var metaCacheControl = document.createElement('meta');
+            var metaPragma = document.createElement('meta');
+            var metaExpires = document.createElement('meta');
+
+            metaCacheControl.setAttribute('http-equiv', 'Cache-Control');
+            metaCacheControl.setAttribute('content', 'no-cache, no-store, must-revalidate');
+            metaPragma.setAttribute('http-equiv', 'Pragma');
+            metaPragma.setAttribute('content', 'no-cache');
+            metaExpires.setAttribute('http-equiv', 'Expires');
+            metaExpires.setAttribute('content', '0');
+
+            var head = document.head || document.getElementsByTagName('head')[0];
+
+            head.appendChild(metaCacheControl);
+            head.appendChild(metaPragma);
+            head.appendChild(metaExpires);
+        }
+
+        agregarMetaEtiquetas();
+    </script>
+
+    <link rel="stylesheet" href="../SiteAssets/css/bootstrap.min.css">
+
+    <link rel="stylesheet" href="../SiteAssets/css/FontAwesome/css/all.min.css">
+
+    <link rel="stylesheet" href="../SiteAssets/css/Sinaptic.Willis.General.css">
+
+    <link rel="stylesheet" href="../SiteAssets/js/DataTables/datatables.min.css">
+
+    <link rel="stylesheet" href="../SiteAssets/js/DataTables/Buttons-1.6.1/css/buttons.dataTables.min.css">
+
+    <title>View Hub</title>
+
+</head>
+<div class="screen-header">
+    <div class="row">
+        <div class="general-header">
+            <div class="screen-subtitle" id="title"></div>
+            <div class="account-commands">
+                <button id="bGoHome" type="button" class="button-account" onclick="goHome()">
+                    <i class="fas fa-home"></i>
+                </button>
+                <button id="bRefresh" type="button" class="button-account" onclick="refreshPage()">
+                    <i class="fas fa-sync"></i>
+                </button>
+
+            </div>
+            <div class="img-container-willis">
+                <img src="../SiteAssets/img/logo.png" class="img-header-willis" alt="Alternate Text" />
+            </div>
+        </div>
+    </div>
+</div>
+<div>
+
+    <div class="view-tl-select">
+        <div class="row">
+            <ul class="nav nav-tabs">
+                <li class="nav-item active" id="tab-assignment" onclick="tabSwitch('tab-assignment')">
+                    <a class="nav-link active" href="#">Assignment Pending</a>
+                </li>
+                <li class="nav-item" id="tab-mytasks" onclick="tabSwitch('tab-mytasks')">
+                    <a class="nav-link" href="#">Tasks</a>
+                </li>
+                <li class="nav-item" id="tab-process" onclick="tabSwitch('tab-process')">
+                    <a class="nav-link" href="#">Process</a>
+                </li>
+            </ul>
+
+        </div>
+
+    </div>
+
+
+    <div id="tableAssignPending">
+        <div class="containerTitleSections">
+            <h5 style="color: #760daf;">Assignments Pending</h5>
+        </div>
+        <div class="subCommandsContainer">
+            <div class="row-buttons">
+                <div class="btn-group">
+                    <input type="text" id="searchTask" placeholder="Search all tasks by reference code" aria-label="Search" />
+                    <span class="input-group-text search-btn" onclick="clickSearchTask()"
+                          style="display: inline-flex; cursor: pointer;">
+                        <i class="fas fa-search text-grey"
+                           aria-hidden="true"></i>
+                    </span>
+                </div>
+                <div class="btn-group">
+                    <div class="separator"></div>
+                </div>
+                <div class="btn-group">
+                    <button type="button" id="bAnalyst" class="button-general" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" disabled>
+                        Assign Analyst <i class="fas fa-angle-down"></i>
+                    </button>
+                    <div class="dropdown-menu" id="oTeamManager"></div>
+                </div>
+            </div>
+            <div class="table-responsive">
+                <table id="dtAssignPending" class="table table-hover table-bordered">
+                    <thead class="thead-light">
+                        <tr>
+                            <th scope="col">ID</th>
+                            <th scope="col">AccountType</th>
+                            <th scope="col">Reference Acc/End</th>
+                            <th scope="col">Office</th>
+                            <th scope="col">Client</th>
+                            <th scope="col">Insured</th>
+                            <th scope="col">Inception</th>
+                            <th scope="col">DueDate</th>
+                            <th scope="col">Assigned</th>
+                            <th scope="col">Prev Assigned To</th>
+                            <th scope="col">Assigned To</th>
+                            <th scope="col">Phase</th>
+                            <th scope="col">Status</th>
+                            <th scope="col"></th>
+                        </tr>
+                    </thead>
+                    <tbody id="tAssignPending"></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div id="tableMyTasks" style="display:none">
+        <div class="containerTitleSections">
+            <h5 style="color: #760daf;">My Tasks</h5>
+        </div>
+        <div id="bFilters" class="analyst-filters">
+            <button id="bMyTasks" type="button" class="button-filter" onclick="getMyTasks()"> My Tasks <i class="fas fa-filter"></i></button>
+            <button id="bAllTasks" type="button" class="button-filter" onclick="getAllTasks()"> All Tasks <i class="fas fa-filter"></i></button>
+
+
+        </div>
+        <div class="subCommandsContainer">
+            <div class="table-responsive">
+                <table id="dtMyTasks" class="table table-hover table-bordered">
+                    <thead class="thead-light">
+                        <tr>
+                            <th scope="col">ID</th>
+                            <th scope="col">AccountType</th>
+                            <th scope="col">Reference Acc/End</th>
+                            <th scope="col">Office</th>
+                            <th scope="col">Client</th>
+                            <th scope="col">Insured</th>
+                            <th scope="col">Inception</th>
+                            <th scope="col">DueDate</th>
+                            <th scope="col">Assigned</th>
+                            <th scope="col">Assigned To</th>
+                            <th scope="col">Phase</th>
+                            <th scope="col">Status</th>
+                            <th scope="col"></th>
+                        </tr>
+                    </thead>
+                    <tbody id="tMyTasks"></tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+    <div id="tableProcess" style="display:none">
+        <div class="containerTitleSections">
+            <h5 style="color: #760daf;">Process</h5>
+        </div>
+        <div class="subCommandsContainer">
+            <div>
+                <button type="button" id="bSuspend" onclick="ClickModalReason(5)" class="button-account"
+                        disabled>
+                    Suspend
+                </button>
+                <button type="button" id="bActivate" onclick="clickActivate()" class="button-account"
+                        disabled>
+                    Activate
+                </button>
+                <button type="button" id="bCancel" onclick="ClickModalReason(6)" class="button-account"
+                        disabled>
+                    Cancel
+                </button>
+            </div>
+            <div class="table-responsive">
+                <table id="dtProcess" class="table table-hover table-bordered">
+                    <thead class="thead-light">
+                        <tr>
+                            <th scope="col">ID</th>
+                            <th scope="col">AccountType</th>
+                            <th scope="col">Reference Account</th>
+                            <th scope="col">Start Date</th>
+                            <th scope="col">Office</th>
+                            <th scope="col">Client</th>
+                            <th scope="col">Due Date</th>
+                            <th scope="col">Insured</th>
+                            <th scope="col">Status</th>
+                            <!--<th scope="col">Reason</th>-->
+                            <th scope="col"></th>
+                        </tr>
+                    </thead>
+                    <tbody id="tProcess"></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div id="tableAccounts" style="display: none;">
+        <table id="dtAccounts" class="table table-hover table-bordered">
+            <thead class="thead-light">
+                <tr id="dtSelect"></tr>
+                <tr id="dtHeader"></tr>
+            </thead>
+            <tbody id="tAccounts"></tbody>
+        </table>
+    </div>
+</div>
+
+<div class="modal fade" id="modalProcess" aria-hidden="true" style="opacity: initial;">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header popup-header">
+                <h1 class="modal-title">View Process</h1>
+                <button type="button" class="close" aria-label="Close" data-dismiss="modal">
+                    <span aria-hidden="true">X</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-5">
+                        <div class="modal-label-content-info">
+                            <label class="modal-label-title">Reference</label><br>
+                            <label class="modal-label-info" id="mProcessReference"></label>
+                        </div>
+                        <div class="modal-label-content-info">
+                            <label class="modal-label-title">Inception</label><br>
+                            <label class="modal-label-info" id="mProcessInception"></label>
+                        </div>
+                        <div class="modal-label-content-info">
+                            <label class="modal-label-title">Client</label><br>
+                            <label class="modal-label-info" id="mProcessClient"></label>
+                        </div>
+                        <div class="modal-label-content-info">
+                            <label class="modal-label-title">Business Line</label><br>
+                            <label class="modal-label-info" id="mProcessBusinessLine"></label>
+                        </div>
+                        <div class="modal-label-content-info">
+                            <label class="modal-label-title">Team</label><br>
+                            <label class="modal-label-info" id="mProcessTeam"></label>
+                        </div>
+                        <div class="modal-label-content-info">
+                            <label class="modal-label-title">Status Billing</label><br>
+                            <label class="modal-label-info" id="mProcessStatusBilling"></label>
+                        </div>
+                        <div class="modal-label-content-info">
+                            <label class="modal-label-title">Status EoC</label><br>
+                            <label class="modal-label-info" id="mProcessStatusEoC"></label>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="col-grl" id="tableTaskBilling" style="margin-top: 5%;">
+                            <div class="column-grl">
+                                <div style="margin-top: 1%;">
+                                    <h2 class="title-col" style="color: #760daf;">Tasks Billing</h2>
+                                </div>
+                                <div class="table-responsive" style="margin-top: 2%;">
+                                    <table class="table">
+                                        <thead class="table-borderless table-endorsement">
+                                            <tr>
+                                                <th scope="col">Phase</th>
+                                                <th scope="col">Status</th>
+                                                <th scope="col">Active</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="tTaskBillingList" style="text-align: center;"></tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-grl" id="tableTaskEoC" style="margin-top: 5%;">
+                            <div class="column-grl">
+                                <div style="margin-top: 1%;">
+                                    <h2 class="title-col" style="color: #760daf;">Tasks EoC</h2>
+                                </div>
+                                <div class="table-responsive" style="margin-top: 2%;">
+                                    <table class="table">
+                                        <thead class="table-borderless table-endorsement">
+                                            <tr>
+                                                <th scope="col">Phase</th>
+                                                <th scope="col">Status</th>
+                                                <th scope="col">Active</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="tTaskEoCList" style="text-align: center;"></tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button id="bModalProcessSave" type="button" class="button-modal" onclick="ClickModalProcessSave()"
+                        disabled>
+                    Save
+                </button>
+                <button type="button" class="button-modal" data-dismiss="modal">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modalTask" aria-hidden="true" style="opacity: initial; overflow:auto;">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header popup-header">
+                <h1 class="modal-title" id="modalTitle"></h1>
+                <button type="button" class="close modal-header-bar" aria-label="Close" onclick="ClickHelp()">
+                    <span aria-hidden="true">?</span>
+                </button>
+                <button type="button" class="close" aria-label="Close" data-dismiss="modal">
+                    <span aria-hidden="true">X</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-5">
+                        <div class="modal-label-content-info">
+                            <label class="title-section">Account/Endorsement Information</label>
+                        </div>
+                        <div class="modal-label-content-info">
+                            <label class="modal-label-title">Reference</label><br>
+                            <label class="modal-label-info" id="mReference"></label>
+                        </div>
+                        <div class="modal-label-content-info">
+                            <label class="modal-label-title">Team</label><br>
+                            <label class="modal-label-info" id="mTeam"></label>
+                        </div>
+                        <div class="modal-label-content-info">
+                            <label class="modal-label-title">Inception</label><br>
+                            <label class="modal-label-info" id="mInception"></label>
+                        </div>
+                        <div class="modal-label-content-info">
+                            <label class="modal-label-title">Client</label><br>
+                            <label class="modal-label-info" id="mClient"></label>
+                        </div>
+                        <div class="modal-label-content-info">
+                            <label class="modal-label-title">Business Line</label><br>
+                            <label class="modal-label-info" id="mBusinessLine"></label>
+                        </div>
+                        <div class="modal-label-content-info">
+                            <label class="modal-label-title">Documentation</label><br>
+                            <label class="modal-label-info" id="mDocumentation"></label>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="modal-label-content-info">
+                            <label class="title-section">Task & Process Information</label>
+                        </div>
+                        <div class="row modal-data-task">
+                            <div class="col">
+                                <label>Creation Date: </label>
+                                <label class="modal-label-data" id="mCreationDate"></label><br />
+                                <label>Assign To: </label>
+                                <label class="modal-label-data" id="mAssignTo"></label><br />
+                                <label>Due Date: </label>
+                                <label class="modal-label-data" id="mDueDate"></label>
+
+                            </div>
+                            <div class="col">
+                                <label>ID Process: </label>
+                                <label class="modal-label-data" id="mIdProcess"></label><br />
+                                <label>Status: </label>
+                                <label class="modal-label-data" id="mStatus"></label>
+                                
+                            </div>
+                            <!--<div class="col">
+                                
+                            </div>
+                            <div class="col">
+                                
+                            </div>-->
+                        </div>
+                        <div id="bChecklistDocumentation">
+                            <button class="tasksButtonsStyle" type="button" onclick="ClickDoc()">
+                                <span aria-hidden="true"><i class="fa fa-list" aria-hidden="true"></i> Checklist Documentation</span>
+                            </button>
+                        </div>
+                        <div class="modal-select" id="mSelectStatus">
+                            <select class="form-control" id="selectStatus" onchange="ChangeTaskStatus()">
+                                <option value="" disabled selected>Status</option>
+                            </select>
+                        </div>
+                        <div class="modal-select" id="mSelectReason">
+                            <select class="form-control" id="selectReason" onchange="ChangeReason()" disabled>
+                                <option value="" disabled selected>Reason</option>
+                            </select>
+                        </div>
+                        <div class="modal-select" id="mEoC">
+                            <input type="checkbox" id="eoC" checked="checked" style="margin: 0px;">
+                            <label style="margin: 0px; font-weight: normal;">EoC</label>
+                        </div>
+                        <div class="modal-select" id="mControlDays">
+                            <input type="checkbox" id="controlDays" checked="checked" style="margin: 0px;">
+                            <label style="margin: 0px; font-weight: normal;">Control 30 Days(25, 28, 30)</label>
+                        </div>
+                        <div class="modal-select" id="mCheckCredDebNote">
+                            <input type="checkbox" id="checkCredDebNote" checked="checked" style="margin: 0px;">
+                            <label style="margin: 0px; font-weight: normal;">SPOE Credit & Debit Note</label>
+                        </div>
+                        <div class="modal-select" id="mUrgent">
+                            <input type="checkbox" id="urgent" checked="checked" style="margin: 0px;">
+                            <label style="margin: 0px; font-weight: normal;">Urgent</label>
+                        </div>
+                        <div class="modal-select" id="mSendDoc">
+                            <input type="checkbox" id="sendDoc" style="margin: 0px;">
+                            <label style="margin: 0px; font-weight: normal;">EoC Documentation Sent</label>
+                        </div>
+                        <div class="modal-comments" id="mComments"></div>
+                        <div style="margin-top: 2%;">
+                            <input style="width: 100%;" id="mComment" type="text" placeholder="Write comment...">
+                        </div>
+                        <div>
+                            <button class="tasksButtonsStyle" id="commentButton" type="button" onclick="ClickAddComment()"> <i class="fa fa-comment" aria-hidden="true"></i>
+                                Add
+                                Comment
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div id="sectionEoC">
+                    <div class="eocStatusHeader">
+                        <div class="eocTitleHeader">
+                            <label id="labelEocTitle"></label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div id="divPhasesEoc">
+                            <label id="labelPhasesEoC"></label><label id="phasesEoC"></label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div id="divDocEoC">
+                            <label id="labelDocEoC"></label><label id="docEoC"></label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button id="bModalSave" type="button" class="button-modal" onclick="ClickModalSave(false)"
+                        disabled>
+                    Save
+                </button>
+                <button id="bModalApprove" type="button" class="button-modal"
+                        onclick="ClickModalSave(true)">
+                    Approve
+                </button>
+                <button id="bModalReject" type="button" class="button-modal"
+                        onclick="ClickOpenModalReason()">
+                    Reject
+                </button>
+                <button type="button" class="button-modal" data-dismiss="modal"
+                        onclick="ClickModalCancel()">
+                    Cancel
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modalHelp" aria-hidden="true" style="opacity: initial;">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header popup-header">
+                <h1 class="modal-title">Help</h1>
+                <button type="button" class="close" aria-label="Close" data-dismiss="modal">
+                    <span aria-hidden="true">X</span>
+                </button>
+            </div>
+            <div class="modal-body" id="modalMsj"></div>
+            <div class="modal-footer">
+                <button type="button" class="button-modal" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modalDocumentation" aria-hidden="true" style="opacity: initial; overflow:auto;">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header popup-header">
+                <h1 class="modal-title">Related documentation</h1>
+                <button type="button" class="close" aria-label="Close" data-dismiss="modal">
+                    <span aria-hidden="true">X</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <ul>
+                    <input type="checkbox" id="na" onclick="ClickCheckBox('na', 'checkall')">
+                    <label class="label-doc">All N/A</label>
+                    <input type="checkbox" id="pending" onclick="ClickCheckBox('pending', 'checkall')">
+                    <label class="label-doc">All Pending</label>
+                    <input type="checkbox" id="ok" onclick="ClickCheckBox('ok', 'checkall')">
+                    <label class="label-doc">All Completed</label>
+                </ul>
+                <ul id="modalListDocumentation"></ul>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="button-modal" onclick="ClickSaveDocumentation()">Save</button>
+                <button type="button" class="button-modal" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modalReason" aria-hidden="true" style="opacity: initial;">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header popup-header">
+                <h1 class="modal-title">Reason</h1>
+                <button type="button" class="close" aria-label="Close" data-dismiss="modal">
+                    <span aria-hidden="true">X</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col">
+                        <label style="margin: 0px; font-weight: normal;">Select reason</label>
+                        <select class="form-control" id="selReason">
+                            <option value="" disabled selected>Reason</option>
+                        </select>
+                    </div>
+                    <div class="col">
+                        <label style="margin: 0px; font-weight: normal;">Insert reason of rejection</label>
+                        <input type="text" id="reasonReject">
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="button-modal" onclick="ClickModalReject()">Save</button>
+                <button type="button" class="button-modal" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modalReasonTask" aria-hidden="true" style="opacity: initial;">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header popup-header">
+                <h1 class="modal-title">Reason</h1>
+                <button type="button" class="close" aria-label="Close" data-dismiss="modal">
+                    <span aria-hidden="true">X</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="modal-select">
+                    <select class="form-control" id="reasonTask">
+                        <option value="" disabled selected>Reason</option>
+                    </select>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="button-modal" onclick="ClickSaveReason()">Save</button>
+                <button type="button" class="button-modal" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--<div class="modal fade" id="modalSummary" aria-hidden="true" style="opacity: initial; overflow: auto;">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header popup-header">
+                <h1 class="modal-title">Process Summary</h1>
+                <button type="button" class="close" aria-label="Close" data-dismiss="modal">
+                    <span aria-hidden="true">X</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-5">
+                        <div class="modal-label-content-info">
+                            <label class="modal-label-title">Reference</label><br>
+                            <label class="modal-label-info" id="mSummaryReference"></label>
+                        </div>
+                        <div class="modal-label-content-info">
+                            <label class="modal-label-title">Insured</label><br>
+                            <label class="modal-label-info" id="mSummaryInsured"></label>
+                        </div>
+                        <div class="modal-label-content-info">
+                            <label class="modal-label-title">Business line</label><br>
+                            <label class="modal-label-info" id="mSummaryBusinessLine"></label>
+                        </div>
+                        <div class="modal-label-content-info">
+                            <label class="modal-label-title">Client</label><br>
+                            <label class="modal-label-info" id="mSummaryClient"></label>
+                        </div>
+                        <div class="modal-label-content-info">
+                            <label class="modal-label-title">Inception date</label><br>
+                            <label class="modal-label-info" id="mSummaryInception"></label>
+                        </div>
+                        <div class="modal-label-content-info">
+                            <label class="modal-label-title">Broker assigned</label><br>
+                            <label class="modal-label-info" id="mSummaryBroker"></label>
+                        </div>
+                        <div class="modal-label-content-info">
+                            <label class="modal-label-title">Process status</label><br>
+                            <label class="modal-label-info" id="mSummaryStatus"></label>
+                        </div>
+                        <div class="modal-label-content-info" id="divSummaryReason">
+                            <label class="modal-label-title">Process status motive</label><br>
+                            <label class="modal-label-info" id="mSummaryReason"></label>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="modal-label-content-info" id="divSummaryCurrentTasks">
+                            <label class="modal-label-title">Current tasks</label>
+                            <div class="modal-label-content-info">
+                                <label class="modal-label-info" id="mSummaryBillingFlowType"></label>
+                                <label class="modal-label-info" id="mSummaryBillingTaskStatus"></label>
+                            </div>
+                            <div class="modal-label-content-info" id="divSummaryBillingTaskStatusReason">
+                                <label class="modal-label-info">Task status motive: </label>
+                                <label class="modal-label-info" id="mSummaryBillingTaskStatusReason"></label>
+                            </div>
+                            <div class="modal-label-content-info" id="mSummaryBillingTaskComment">
+                                <label class="modal-label-info"></label>
+                            </div>
+                            <div class="div-separator"></div>
+                            <div class="modal-label-content-info">
+                                <label class="modal-label-info" id="mSummaryEoCFlowType"></label>
+                                <label class="modal-label-info" id="mSummaryEoCTaskStatus"></label>
+                            </div>
+                            <div class="modal-label-content-info" id="divSummaryEoCTaskStatusReason">
+                                <label class="modal-label-info">Task status motive: </label>
+                                <label class="modal-label-info" id="mSummaryEoCTaskStatusReason"></label>
+                            </div>
+                            <div class="modal-label-content-info">
+                                <label class="modal-label-info" id="mSummaryEoCTaskComment"></label>
+                            </div>
+                        </div>
+                        <div class="modal-comments-summary" id="mSummaryComments"></div>
+                    </div>
+                </div>
+                <div id="divSummaryEndorsements">
+                    <div class="eocStatusHeader">
+                        <div class="eocTitleHeader">
+                            <label>Endorsements Summary</label>
+                        </div>
+                    </div>
+                </div>
+                <div id="divSummaryProcessLog">
+                    <div href="#collapseProcessLog" data-toggle="collapse" class="eocStatusHeader">
+                        <div class="eocTitleHeader" style="cursor: pointer;">
+                            <label style="cursor: pointer;">Process Log</label>
+                            <i class="fas fa-sort-down"></i>
+                        </div>
+                    </div>
+                    <div id="collapseProcessLog" class="collapse"></div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="button-modal" data-dismiss="modal"
+                        onclick="ClickCancelSummary('ViewAnalyst')">
+                    Cancel
+                </button>
+            </div>
+        </div>
+    </div>
+</div>-->
+
+
+<div class="modal fade" id="modalSummary" aria-hidden="true" style="opacity: initial; overflow: auto;">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header popup-header">
+                <h1 class="modal-title">Process Summary </h1>
+                <button type="button" class="close" aria-label="Close" data-dismiss="modal">
+                    <span aria-hidden="true">X</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-5">
+                        <div class="modal-label-content-info">
+                            <label class="title-section">Account/Endorsement Information</label>
+                        </div>
+                        <div class="modal-label-content-info">
+                            <label class="modal-label-title">Reference</label><br>
+                            <a class="modal-label-info" id="mSummaryReference"></a>
+                        </div>
+                        <div class="modal-label-content-info">
+                            <label class="modal-label-title">Insured</label><br>
+                            <label class="modal-label-info" id="mSummaryInsured"></label>
+                        </div>
+                        <!--<div class="modal-label-content-info">
+                <label class="modal-label-title">Business line</label><br>
+                <label class="modal-label-info" id="mSummaryBusinessLine"></label>
+            </div>-->
+                        <div class="modal-label-content-info">
+                            <label class="modal-label-title">Client</label><br>
+                            <label class="modal-label-info" id="mSummaryClient"></label>
+                        </div>
+                        <div class="modal-label-content-info">
+                            <label class="modal-label-title">Inception date</label><br>
+                            <label class="modal-label-info" id="mSummaryInception"></label>
+                        </div>
+                        <div class="modal-label-content-info">
+                            <label class="modal-label-title">Broker assigned</label><br>
+                            <label class="modal-label-info" id="mSummaryBroker"></label>
+                        </div>
+
+                        <div class="modal-label-content-info" id="divSummaryReason">
+                            <label class="modal-label-title">Process status motive</label><br>
+                            <label class="modal-label-info" id="mSummaryReason"></label>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="modal-label-content-info">
+                            <label class="title-section">Current Tasks Process</label>
+                        </div>
+                        <div class="modal-label-content-info">
+                            <label class="modal-label-title">Process status: </label>
+                            <label class="modal-label-info" id="mSummaryStatus"></label><br />
+                            <label class="modal-label-title">Due Date: </label>
+                            <label class="modal-label-info" id="mSummaryDueDate"></label>
+                        </div>
+                        <div class="modal-label-content-info">
+                            <h4 class="title-branch"><i class="fa fa-cogs" aria-hidden="true"></i>  Billing Process </h4>
+                            <br />
+                            <label class="modal-label-title" id="mSummaryBillingFlowType"></label>
+                            <label class="modal-label-info" id="mSummaryBillingTaskStatus"></label><br />
+                            <label class="modal-label-title">Assigned To: </label>
+                            <label class="modal-label-info" id="mSummBillingAssignedTo"></label>
+                        </div>
+                        <div class="modal-label-content-info" id="divSummaryBillingTaskStatusReason">
+                            <label class="modal-label-title">Task status motive: </label>
+                            <label class="modal-label-info" id="mSummaryBillingTaskStatusReason"></label>
+                        </div>
+                        <div class="modal-label-content-info" id="mSummaryBillingTaskComment">
+                            <label class="modal-label-info"></label>
+                        </div>
+                        <!--<div class="div-separator"></div>-->
+                        <div class="modal-label-content-info">
+                            <h4 class="title-branch"><i class="fa fa-cogs" aria-hidden="true"></i>  EoC Process </h4>
+                            <br />
+                            <label class="modal-label-title" id="mSummaryEoCFlowType"></label>
+                            <label class="modal-label-info" id="mSummaryEoCTaskStatus"></label><br />
+                            <label class="modal-label-title">Assigned To: </label>
+                            <label class="modal-label-info" id="mSummEoCAssignedTo"></label>
+                        </div>
+                        <div class="modal-label-content-info" id="divSummaryEoCTaskStatusReason">
+                            <label class="modal-label-title">Task status motive: </label>
+                            <label class="modal-label-info" id="mSummaryEoCTaskStatusReason"></label>
+                        </div>
+                        <div class="modal-label-content-info">
+                            <label class="modal-label-info" id="mSummaryEoCTaskComment"></label>
+                        </div>
+                        <div class="modal-label-content-info">
+                            <h4 class="title-branch"><i class="fa fa-comments" aria-hidden="true"></i>  Comments </h4>
+                        </div>
+                        <div class="modal-comments-summary" id="mSummaryComments"></div>
+                    </div>
+                </div>
+
+                <div id="divSummaryDocuments">
+                    <div href="#collapseDocuments" data-toggle="collapse" class="eocStatusHeader">
+                        <div class="eocTitleHeader" style="cursor: pointer;">
+                            <label style="cursor: pointer;">Documents Information</label>
+                            <i class="fas fa-sort-down">
+                                
+                            </i>
+                        </div>
+                    </div>
+                    <div id="collapseDocuments" class="collapse documents-info-summary">
+                        <div class="row list-documents">
+                            <div class='col'>Title Document</div><div class='col'>N/A</div><div class='col'>Pending</div><div class='col'>OK</div>
+                        </div>
+                        <ul id="documentList" class="list-group">
+                        </ul>
+
+                    </div>
+                </div>
+
+                <div id="divSummaryEndorsements">
+                    <div class="eocStatusHeader">
+                        <div class="eocTitleHeader">
+                            <label>Endorsements Summary</label>
+                        </div>
+                    </div>
+                </div>
+                <div id="divSummaryProcessLog">
+                    <div href="#collapseProcessLog" data-toggle="collapse" class="eocStatusHeader">
+                        <div class="eocTitleHeader" style="cursor: pointer;">
+                            <label style="cursor: pointer;">Process Log</label>
+                            <i class="fas fa-sort-down"></i>
+                        </div>
+                    </div>
+                    <div id="collapseProcessLog" class="collapse"></div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="button-modal" data-dismiss="modal" onclick="ClickCancelSummary('Accounts')">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal" id="loadMe" tabindex="-1" role="dialog" aria-labelledby="ModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-body modal-LoadMe">
+            <div class="loader spinner-border"></div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="errorMsgModal" aria-hidden="true" style="opacity: initial; overflow: auto;">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header popup-header">
+                <h5 class="modal-title">System Message</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p id="error"></p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="relatedDocumentModal" aria-hidden="true" style="opacity: initial; overflow:auto;">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header popup-header">
+                <h1 class="modal-title">Related documents</h1>
+                <button type="button" class="close" aria-label="Close" data-dismiss="modal">
+                    <span aria-hidden="true">X</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div id="overlay">
+                    <div class="w-100 d-flex justify-content-center align-items-center">
+                        <div class="spinner"></div>
+                    </div>
+                </div>
+                <input type="text" id="docSearchInput" onkeyup="searchDocs()" placeholder="Search for document names..">
+                <ol class="breadcrumb"></ol>
+                <div class="table-responsive" style="margin-top: 2%;">
+                    <table class="table" id="tbRelatedDocuments">
+                        <tbody id="tRelatedDocuments"></tbody>
+                    </table>
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="button-modal" id="closeRelatedDoc" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="../SiteAssets/js/Sinaptic.Willis.ViewAnalyst.js"></script>
+<script src="../SiteAssets/js/Sinaptic.Willis.Service.js"></script>
+
+</html>

@@ -1,0 +1,154 @@
+﻿<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <script src="../SiteAssets/js/jquery-3.4.1.min.js"></script>
+
+    <script src="../SiteAssets/js/popper.min.js"></script>
+
+    <script src="../SiteAssets/js/bootstrap.min.js"></script>
+
+    <script src="../SiteAssets/js/DataTables/datatables.min.js"></script>
+
+    <script src="../SiteAssets/js/DataTables/vfs_fonts.js"></script>
+
+    <script src="../SiteAssets/js/DataTables/pdfmake.min.js"></script>
+
+    <script src="../SiteAssets/js/DataTables/jszip.min.js"></script>
+
+    <script src="../SiteAssets/js/DataTables/DataTables-1.10.20/js/jquery.dataTables.min.js"></script>
+
+    <script src="../SiteAssets/js/DataTables/Buttons-1.6.1/js/dataTables.buttons.min.js"></script>
+
+    <script src="../SiteAssets/js/DataTables/Buttons-1.6.1/js/buttons.flash.min.js"></script>
+
+    <script src="../SiteAssets/js/DataTables/Buttons-1.6.1/js/buttons.html5.min.js"></script>
+
+    <script src="../SiteAssets/js/DataTables/Buttons-1.6.1/js/buttons.print.min.js"></script>
+
+    <script src="../SiteAssets/js/Dropzone/dropzone.js"></script>
+
+
+
+    <link rel="stylesheet" href="../SiteAssets/css/bootstrap.min.css">
+
+    <link rel="stylesheet" href="../SiteAssets/css/FontAwesome/css/all.min.css">
+
+    <link rel="stylesheet" href="../SiteAssets/css/Sinaptic.Willis.General.css">
+
+    <link rel="stylesheet" href="../SiteAssets/css/Sinaptic.Willis.ViewAccount.css">
+
+    <link rel="stylesheet" href="../SiteAssets/js/DataTables/datatables.min.css">
+
+    <link rel="stylesheet" href="../SiteAssets/js/Dropzone/dropzone.css">
+
+    <link rel="stylesheet" href="../SiteAssets/js/DataTables/Buttons-1.6.1/css/buttons.dataTables.min.css">
+
+    <title>View Claim</title>
+
+</head>
+<div class="screen-body">
+    <div class="container">
+        <div class="row">
+
+            <input type="file" id="files" name="files[]" multiple />
+            <output id="list"></output>
+
+        </div>
+
+    </div>
+</div>
+
+<script src="../SiteAssets/js/Sinaptic.Willis.ViewClaim.js"></script>
+<script src="../SiteAssets/js/Sinaptic.Willis.ClaimTaskService.js"></script>
+<script src="../SiteAssets/js/Sinaptic.Willis.Service.js"></script>
+<script type="text/javascript">
+
+
+
+
+    function handleFileSelect(evt) {
+        var files = evt.target.files; // FileList object
+
+        debugger;   
+        // Loop through the FileList and render image files as thumbnails.
+        for (var i = 0, f; f = files[i]; i++) {
+
+            // Only process image files.
+            if (!f.type.match('image.*')) {
+                continue;
+            }
+
+            var reader = new FileReader();
+
+            // Closure to capture the file information.
+            reader.onload = (function (theFile) {
+
+                //
+                return function (e) {
+                    // Render thumbnail.
+                    //upload("\\\\192.168.0.58\\Shared Folder", "Prueba", e.File.filePart);
+                    uploadFile("/", theFile);
+                    
+                    var span = document.createElement('span');
+                    span.innerHTML = ['<img class="thumb" src="', e.target.result,
+                        '" title="', escape(theFile.name), '"/>'].join('');
+                    document.getElementById('list').insertBefore(span, null);
+                };
+            })(f);
+
+            // Read in the image file as a data URL.
+            reader.readAsDataURL(f);
+        }
+    }
+    document.getElementById('files').addEventListener('change', handleFileSelect, false);
+
+    $(document).ready(function () {
+
+        //alert("Hola");
+
+
+    });
+
+    function uploadFile(pathFolder, file) {
+        $.ajax({
+            url: "http://localhost:2000/api/Upload",
+            type: "POST",
+            crossDomain: true,
+            data: file,
+            processData: false,
+            headers: {
+                "Access-Control-Allow-Headers": "Content-Type",
+                "Access-Control-Allow-Origin": "*",
+                "Access-Control-Allow-Methods": "OPTIONS,POST,GET"
+            },
+            //headers: {
+            //    "accept": "application/json;odata=verbose",
+            //    "X-RequestDigest": $("#__REQUESTDIGEST").val()
+            //},
+            success: function (data) {
+                console.log("Document created successfully");
+            }
+        });
+    }
+    //function upload(postUrl, fieldName, filePart) {
+    //    var formData = new FormData();
+    //    formData.append(fieldName, new File(filePart, "VEP_6955.pdf"));
+
+    //    var req = new XMLHttpRequest();
+    //    req.open("POST", postUrl);
+    //    req.onload = function (event) { alert(event.target.responseText); };
+    //    req.send(formData);
+    //}
+
+    //function CreateFolder() {
+    //    var myObject, newfolder;
+    //    myObject = new ActiveXObject("Scripting.FileSystemObject");
+    //    newfolder = myObject.CreateFolder("C:\\MORIS\\");
+    //}
+</script>
+</html>

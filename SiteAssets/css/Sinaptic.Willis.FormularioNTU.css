@@ -1,0 +1,37 @@
+.button-account {
+    background-color: #760daf;
+    border: none;
+    color: white;
+    padding: 12px 16px;
+    font-size: 16px;
+    cursor: pointer;
+    margin-left: 2%;
+    margin-top: 2%;
+    margin-bottom: 2%;
+  }
+  
+.button-account:hover {
+   background-color: purple;
+}
+
+
+
+
+#s4-titlerow {
+    display: none !important;
+}
+
+.button-filter {
+    background-color: white;
+    color: #760daf;
+}
+
+.button-filter:hover {
+   background-color: whitesmoke;
+   border-color: #760daf;
+}
+
+.row-buttons {
+    margin-left: 2%;
+    margin-top: 3%;
+}

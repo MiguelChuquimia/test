@@ -1,0 +1,396 @@
+﻿<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <script src="../SiteAssets/js/jquery-3.4.1.min.js"></script>
+
+    <script src="../SiteAssets/js/popper.min.js"></script>
+
+    <script src="../SiteAssets/js/bootstrap.min.js"></script>
+
+    <script src="../SiteAssets/js/DataTables/datatables.min.js"></script>
+
+    <script src="../SiteAssets/js/DataTables/vfs_fonts.js"></script>
+
+    <script src="../SiteAssets/js/DataTables/pdfmake.min.js"></script>
+
+    <script src="../SiteAssets/js/DataTables/jszip.min.js"></script>
+
+    <script src="../SiteAssets/js/DataTables/DataTables-1.10.20/js/jquery.dataTables.min.js"></script>
+
+    <script src="../SiteAssets/js/DataTables/Buttons-1.6.1/js/dataTables.buttons.min.js"></script>
+
+    <script src="../SiteAssets/js/DataTables/Buttons-1.6.1/js/buttons.flash.min.js"></script>
+
+    <script src="../SiteAssets/js/DataTables/Buttons-1.6.1/js/buttons.html5.min.js"></script>
+
+    <script src="../SiteAssets/js/DataTables/Buttons-1.6.1/js/buttons.print.min.js"></script>
+
+    <link rel="stylesheet" href="../SiteAssets/css/bootstrap.min.css">
+
+    <link rel="stylesheet" href="../SiteAssets/css/FontAwesome/css/all.min.css">
+
+    <link rel="stylesheet" href="../SiteAssets/css/Sinaptic.Willis.General.css">
+
+    <link rel="stylesheet" href="../SiteAssets/js/DataTables/datatables.min.css">
+
+    <link rel="stylesheet" href="../SiteAssets/js/DataTables/Buttons-1.6.1/css/buttons.dataTables.min.css">
+
+    <style>
+        .select-filter{
+            padding-left: 10px;
+        }
+    </style>
+    <title>View Hub</title>
+
+</head>
+<div class="screen-header">
+    <div class="row">
+        <div class="general-header">
+            <div class="screen-subtitle" id="subtitle">Claim Tasks </div>
+            <div class="img-container-willis">
+                <img src="../SiteAssets/img/logo.png" class="img-header-willis" alt="Alternate Text" />
+            </div>
+        </div>
+    </div>
+</div>
+<div class="view-tl-select">
+    <div class="row">
+        <ul class="nav nav-tabs">
+            <li class="nav-item active" id="tab-assignment" onclick="tabSwitch('tab-assignment')">
+                <a class="nav-link active" href="#">Assignment Pending</a>
+            </li>
+            <li class="nav-item" id="tab-mytasks" onclick="tabSwitch('tab-mytasks')">
+                <a class="nav-link" href="#">My Tasks</a>
+            </li>
+            <li class="nav-item" id="tab-mytasks" onclick="tabSwitch('tab-allClaims')">
+                <a class="nav-link" href="#">All Claims</a>
+            </li>
+
+        </ul>
+
+    </div>
+
+</div>
+
+<div id="tableAssignPending">
+    <div class="containerTitleSections">
+    </div>
+    <div>
+        <div class="row-buttons">
+            <div class="btn-group">
+                <input type="text" id="searchTask" placeholder="Search" aria-label="Search" />
+                <span class="input-group-text search-btn" onclick="clickSearchTask()"
+                      style="display: inline-flex; cursor: pointer;">
+                    <i class="fas fa-search text-grey"
+                       aria-hidden="true"></i>
+                </span>
+            </div>
+            <div class="btn-group">
+            </div>
+            <div class="btn-group">
+                <button type="button" id="bAnalyst" class="button-account" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" disabled>
+                    Assign Analyst <i class="fas fa-angle-down"></i>
+                </button>
+                <div class="dropdown-menu" id="oTeamManager"></div>
+            </div>
+        </div>
+        <div class="table-responsive">
+            <table id="dtAssignPending" class="table table-hover table-bordered">
+                <thead class="thead-light">
+                    <tr>
+                        <th scope="col">ID</th>
+                        <th scope="col">Claim Reference</th>
+                        <th scope="col">Business Reference</th>
+                        <th scope="col">Claim Movement</th>
+                        <th scope="col">Client</th>
+                        <th scope="col">Cedent</th>
+                        <th scope="col">Inception</th>
+                        <th scope="col">DueDate</th>
+                        <!--<th scope="col">DateOfLoss</th>-->
+                        <th scope="col">Reinsured</th>
+                        <th scope="col">Status</th>
+                        <th scope="col">Claimed Amount</th>
+                        <th scope="col"></th>
+                    </tr>
+                </thead>
+                <tbody id="tAssignPending"></tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<div id="tableMyTasks">
+    <div class="containerTitleSections">
+    </div>
+    <div id="bFilters" class="analyst-filters">
+        <button id="bMyTasks" type="button" class="button-filter" onclick="getMyTasks()"> My Tasks <i class="fas fa-filter"></i></button>
+        <button id="bAllTasks" type="button" class="button-filter" onclick="getAllTasks()"> All Tasks <i class="fas fa-filter"></i></button>
+
+
+    </div>
+    <div style="margin-top: 1%;">
+        <div class="table-responsive">
+            <table id="dtMyTasks" class="table table-hover table-bordered">
+                <thead class="thead-light">
+                    <tr>
+                        <th scope="col">ID</th>
+                        <th scope="col">Claim Reference</th>
+                        <th scope="col">Business Reference</th>
+                        <th scope="col">Claim Movement</th>
+                        <th scope="col">Assigned To</th>
+                        <th scope="col">Client</th>
+                        <th scope="col">Cedent</th>
+                        <th scope="col">Inception</th>
+                        <th scope="col">DueDate</th>
+                        <!--<th scope="col">DateOfLoss</th>-->
+                        <th scope="col">Reinsured</th>
+                        <th scope="col">Status</th>
+                        <th scope="col">Claimed Amount</th>
+                        <th scope="col"></th>
+                    </tr>
+                </thead>
+                <tbody id="tMyTasks"></tbody>
+            </table>
+        </div>
+    </div>
+
+</div>
+
+<div id="tableAllClaims">
+    <div class="callout callout-info">
+        <h4>Information</h4>
+        Initially shows the claims of the office. You can use the search engine for claims in general.
+    </div>
+    <div class="row-buttons">
+        <div class="btn-group">
+            <input type="text" id="searchClaim" placeholder="Search" aria-label="Search" />
+            <span class="input-group-text search-btn" onclick="clickSearchClaim()"
+                  style="display: inline-flex; cursor: pointer;">
+                <i class="fas fa-search text-grey"
+                   aria-hidden="true"></i>
+            </span>
+            <select class="form-control select-filter" id="selectFilter" onchange="ChangeFilter()">
+                <option value="1" selected>By account reference</option>
+                <option value="2">By claim id</option>
+            </select>
+        </div>
+       
+    </div>
+    <div style="margin-top: 1%;">
+        <div class="table-responsive">
+            <table id="dtAllClaims" class="table table-hover table-bordered">
+                <thead class="thead-light">
+                    <tr>
+                        <th scope="col">ID</th>
+                        <th scope="col">Claim Reference</th>
+                        <th scope="col">Business Reference</th>
+                        <th scope="col">Reinsured</th>
+                        <th scope="col">Client</th>
+                        <th scope="col">Description</th>
+                        <th scope="col">Ocurrence Date</th>
+                        <!--<th scope="col">Business Line</th>-->
+                        <th scope="col">Cedent Reference</th>
+                        <th scope="col">Status</th>
+                        <!--<th scope="col">WTW UK Reference</th>-->
+                        <th scope="col"></th>
+                    </tr>
+                </thead>
+                <tbody id="tAllClaims"></tbody>
+            </table>
+        </div>
+    </div>
+
+</div>
+
+<div class="modal fade" id="modalTask" aria-hidden="true" style="opacity: initial; overflow:auto;">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header popup-header">
+                <h1 class="modal-title" id="modalTitle"></h1>
+                <button type="button" class="close" aria-label="Close" data-dismiss="modal">
+                    <span aria-hidden="true">X</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-5">
+                        <div class="modal-label-content-info">
+                            <label class="modal-label-title">Claim ID</label><br>
+                            <label class="modal-label-info" id="mClaimId"></label>
+                        </div>
+                        <div class="modal-label-content-info">
+                            <label class="modal-label-title">Reference</label><br>
+                            <a class="modal-label-info" id="mReference" target="_blank"></a>
+                        </div>
+                        <div class="modal-label-content-info">
+                            <label class="modal-label-title">Business Reference</label><br>
+                            <a class="modal-label-info" id="mBusinessReference" target="_blank"></a>
+                        </div>
+                        <div class="modal-label-content-info">
+                            <label class="modal-label-title">Report Date</label><br>
+                            <label class="modal-label-info" id="mReportDate"></label>
+                        </div>
+                        <div class="modal-label-content-info">
+                            <label class="modal-label-title">Closure Reason</label><br>
+                            <label class="modal-label-info" id="mClosureReason"></label>
+                        </div>
+                        <div class="modal-label-content-info">
+                            <label class="modal-label-title">Client</label><br>
+                            <label class="modal-label-info" id="mClient"></label>
+                        </div>
+                        <div class="modal-label-content-info">
+                            <label class="modal-label-title">Business Line</label><br>
+                            <label class="modal-label-info" id="mBusinessLine"></label>
+                        </div>
+                        <div class="modal-label-content-info">
+                            <label class="modal-label-title">Documentation</label><br>
+                            <label class="modal-label-info" id="mDocumentation"></label>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="container" id="dataTask">
+                            <div class="row" id="divDateLoss">
+                                <label>Date of loss:	&nbsp; </label>
+                                <label class="modal-label-data" id="mDateLoss"></label>
+                            </div>
+                            <div class="row" id="divReportDateTask">
+                                <label>Report Date:	&nbsp; </label>
+                                <label class="modal-label-data" id="mReportDateTask"></label>
+                            </div>
+                            <div class="row" id="divCause">
+                                <label>Cause:	&nbsp; </label>
+                                <label class="modal-label-data" id="mCause"></label>
+                            </div>
+                            <div class="row" id="divCedentReference">
+                                <label>Cedent Reference:	&nbsp; </label>
+                                <label class="modal-label-data" id="mCedentReference"></label>
+                            </div>
+                            <div class="row" id="divDescription">
+                                <label>Description:	&nbsp; </label>
+                                <label class="modal-label-data" id="mDescription"></label>
+                            </div>
+                            <div class="row" id="divAmount">
+                                <label>Amount: 	&nbsp;</label>
+                                <label class="modal-label-data" id="mAmount"></label>
+                            </div>
+                            <div class="row" id="divPercent">
+                                <label>Percent:	&nbsp; </label>
+                                <label class="modal-label-data" id="mPercent"></label>
+                            </div>
+                            <div class="row" id="divAttachedDoc">
+                                <label>Attached Suporting Document:	&nbsp; </label>
+                                <label class="modal-label-data" id="mAttachedDoc"></label>
+                            </div>
+                            <div class="row" id="divParticipationPercentage">
+                                <label>Participation Percentage:&nbsp; </label>
+                                <label class="modal-label-data" id="mParticipationPercentage"></label>
+                            </div>
+                            <div class="row" id="divAmountRecover">
+                                <label for="mAmountRecover">Amount Recover Cedent:	&nbsp; </label>
+                                <label class="modal-label-data" id="mAmountRecover"></label>
+                            </div>
+                            <div class="row" id="divClaimedAmount">
+                                <label for="mAmountRecover">Claimed Amount:	&nbsp; </label>
+                                <input type="text" id="claimedAmount" class="form-control input-willis">
+                            </div>
+                            <div class="row" id="divCurrency">
+                                <label for="viewCurrency">Currency &nbsp; </label>
+                                <input type="text" id="viewCurrency" class="form-control input-willis" disabled>
+                            </div>
+                        </div>
+                        <div class="modal-select" id="mSelectStatus">
+                            <select class="form-control" id="selectStatus" onchange="ChangeTaskStatus()">
+                                <option value="" disabled selected>Status</option>
+                            </select>
+                        </div>
+                        <div class="modal-comments" id="mComments"></div>
+                        <div style="margin-top: 2%;">
+                            <input style="width: 100%;" id="mComment" type="text" placeholder="Write comment...">
+                        </div>
+                        <div style="margin-top: 2%; text-align: center;">
+                            <button type="button" class="tasksButtonsStyle" onclick="ClickAddComment()">
+                                Add
+                                Comment
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button id="bModalSave" type="button" class="button-modal" onclick="ClickModalSave()"
+                        disabled>
+                    Save
+                </button>
+                <button type="button" class="button-modal" data-dismiss="modal">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal" id="loadMe" tabindex="-1" role="dialog" aria-labelledby="ModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-body modal-LoadMe">
+            <div class="loader spinner-border"></div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="errorMsgModal" aria-hidden="true" style="opacity: initial; overflow: auto;">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header popup-header">
+                <h5 class="modal-title">System Message</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p id="error"></p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="relatedDocumentModal" aria-hidden="true" style="opacity: initial; overflow:auto;">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header popup-header">
+                <h1 class="modal-title">Related documents</h1>
+                <button type="button" class="close" aria-label="Close" data-dismiss="modal">
+                    <span aria-hidden="true">X</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div id="overlay">
+                    <div class="w-100 d-flex justify-content-center align-items-center">
+                        <div class="spinner"></div>
+                    </div>
+                </div>
+                <input type="text" id="docSearchInput" onkeyup="searchDocs()" placeholder="Search for document names..">
+                <ol class="breadcrumb"></ol>
+                <div class="table-responsive" style="margin-top: 2%;">
+                    <table class="table" id="tbRelatedDocuments">
+                        <tbody id="tRelatedDocuments"></tbody>
+                    </table>
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="button-modal" id="closeRelatedDoc" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="../SiteAssets/js/Sinaptic.Willis.ViewClaimsTasks.js?ctag=231118"></script>
+<script src="../SiteAssets/js/Sinaptic.Willis.Service.js?ctag=231118"></script>
+
+</html>

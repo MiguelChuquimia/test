@@ -1,0 +1,33 @@
+.screen-body {
+ 
+}
+
+
+.info {
+    margin-top: 2%;
+}
+
+
+.input-form {
+    width: 60% !important;
+}
+
+.button-action {
+    background-color: #760daf;
+    border: none;
+    color: white;
+    padding: 12px 16px;
+    font-size: 16px;
+    cursor: pointer;
+    margin-left: 2%;
+    margin-top: 2%;
+    margin-bottom: 2%;
+}
+  
+.button-action:hover {
+   background-color: purple;
+}
+
+#s4-titlerow {
+    display: none !important;
+}

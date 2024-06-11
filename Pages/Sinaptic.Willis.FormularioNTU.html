@@ -1,0 +1,109 @@
+﻿<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <script src="../SiteAssets/js/jquery-3.4.1.min.js"></script>
+
+    <script src="../SiteAssets/js/bootstrap.min.js"></script>
+
+    <script src="../SiteAssets/js/popper.min.js"></script>
+
+    <link rel="stylesheet" href="../SiteAssets/css/bootstrap.min.css">
+
+    <link rel="stylesheet" href="../SiteAssets/css/FontAwesome/css/all.min.css">
+
+    <link rel="stylesheet" href="../SiteAssets/css/Sinaptic.Willis.General.css">
+    <link rel="stylesheet" href="../SiteAssets/css/Sinaptic.Willis.FormularioNTU.css">
+
+    <title>NTU</title>
+
+</head>
+<div class="screen-body">
+    <div class="row">
+
+        <div class="general-header">
+            <div class="screen-subtitle"> NTU Form</div>
+            <div class="img-container-willis">
+                <img src="../SiteAssets/img/logo.png" class="img-header-willis" alt="Alternate Text" />
+            </div>
+        </div>
+
+    </div>
+    <div class="row">
+        <br />
+        <br />
+        <br />
+
+    </div>
+        <div class="row">
+            <div class="form-group form-account">
+                <div class="form-group">
+                    <label class="label-input">Reference</label>
+                    <input type="text" id="reference" class="form-control input-willis" disabled>
+                </div>
+                <div class="form-group">
+                    <label class="label-input">Reason</label>
+                    <select id="reason" class="form-control input-willis">
+                        <option value="LostByTerms">Lost by Terms</option>
+                        <option value="LostByCost">Lost by Cost</option>
+                        <option value="LostbyCost&Terms">Lost by Cost & Terms</option>
+                        <option value="LostByOtherReasons">Lost by other reasons</option>
+                        <option value="DuplicateBusinessInSharePoint">Duplicate Business in SharePoint</option>
+                        <option value="ManagedByUK">Managed by UK</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="label-input">Comments</label>
+                    <textarea id="comment" class="form-control input-willis"></textarea>
+                </div>
+                <div class="form-group">
+                    <label class="label-input">Quote Next Period</label>
+                    <input type="checkbox" id="QNP" class="input-checkbox" style="margin-left: 22px;" onchange="changeQNP()"><br />
+                    <label class="label-input" id="QNPUserLabel">Select Broker</label>
+                    <select id="QNPUser" class="form-control input-willis"></select>
+                </div>
+                <div class="form-group">
+                    <label class="label-input" id="nextPeriodDateLabel">Quote Next Period Date</label>
+                    <input type="date" id="nextPeriodDate" class="form-control input-willis">
+                </div>
+
+                <div class="row-buttons">
+                    <button type="button" class="button-action" onclick="clickSave()"> Save <i class="far fa-save"></i></button>
+                    <button type="button" class="button-action" onclick="clickCancel()">
+                        Cancel <i class="far fa-times-circle"></i>
+                    </button>
+                </div>
+                <div style="height: 50px;"></div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="errorMsgModal" aria-hidden="true" style="opacity: initial; overflow: auto;">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header popup-header">
+                    <h5 class="modal-title">System Message</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p id="error"></p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <script src="../SiteAssets/js/Sinaptic.Willis.FormularioNTU.js"></script>
+    <script src="../SiteAssets/js/Sinaptic.Willis.Service.js"></script>
+
+</html>

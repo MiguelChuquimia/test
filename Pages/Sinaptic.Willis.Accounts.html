@@ -1,0 +1,373 @@
+﻿<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <script src="../SiteAssets/js/jquery-3.4.1.min.js"></script>
+
+    <script src="../SiteAssets/js/popper.min.js"></script>
+
+    <script src="../SiteAssets/js/bootstrap.min.js"></script>
+
+    <script src="../SiteAssets/js/DataTables/datatables.min.js"></script>
+
+    <script src="../SiteAssets/js/DataTables/vfs_fonts.js"></script>
+
+    <script src="../SiteAssets/js/DataTables/pdfmake.min.js"></script>
+
+    <script src="../SiteAssets/js/DataTables/jszip.min.js"></script>
+
+    <script src="../SiteAssets/js/DataTables/DataTables-1.10.20/js/jquery.dataTables.min.js"></script>
+
+    <script src="../SiteAssets/js/DataTables/Buttons-1.6.1/js/dataTables.buttons.min.js"></script>
+
+    <script src="../SiteAssets/js/DataTables/Buttons-1.6.1/js/buttons.flash.min.js"></script>
+
+    <script src="../SiteAssets/js/DataTables/Buttons-1.6.1/js/buttons.html5.min.js"></script>
+
+    <script src="../SiteAssets/js/DataTables/Buttons-1.6.1/js/buttons.print.min.js"></script>
+    
+    <script src="/_layouts/1033/init.js" type="text/javascript"></script>
+  
+    <script src="/_layouts/sp.core.js" type="text/javascript"></script>
+    <script src="/_layouts/sp.runtime.js" type="text/javascript"></script>
+    <script src="/_layouts/sp.js" type="text/javascript"></script>
+
+    <script>
+        function agregarMetaEtiquetas() {
+            var metaCacheControl = document.createElement('meta');
+            var metaPragma = document.createElement('meta');
+            var metaExpires = document.createElement('meta');
+
+            metaCacheControl.setAttribute('http-equiv', 'Cache-Control');
+            metaCacheControl.setAttribute('content', 'no-cache, no-store, must-revalidate');
+            metaPragma.setAttribute('http-equiv', 'Pragma');
+            metaPragma.setAttribute('content', 'no-cache');
+            metaExpires.setAttribute('http-equiv', 'Expires');
+            metaExpires.setAttribute('content', '0');
+
+            var head = document.head || document.getElementsByTagName('head')[0];
+
+            head.appendChild(metaCacheControl);
+            head.appendChild(metaPragma);
+            head.appendChild(metaExpires);
+        }
+
+        agregarMetaEtiquetas();
+    </script>
+
+    <link rel="stylesheet" href="../SiteAssets/css/bootstrap.min.css">
+
+    <link rel="stylesheet" href="../SiteAssets/css/FontAwesome/css/all.min.css">
+
+    <link rel="stylesheet" href="../SiteAssets/css/Sinaptic.Willis.Accounts.css">
+
+    <link rel="stylesheet" href="../SiteAssets/css/Sinaptic.Willis.General.css">
+
+    <link rel="stylesheet" href="../SiteAssets/js/DataTables/datatables.min.css">
+
+    <link rel="stylesheet" href="../SiteAssets/js/DataTables/Buttons-1.6.1/css/buttons.dataTables.min.css">
+
+    <title>My Accounts</title>
+
+</head>
+<div class="screen-header">
+    <div class="row">
+        <div class="general-header">
+
+            <div class="screen-subtitle" id="subtitle">Accounts</div>
+            <div class="account-commands">
+                <button type="button" class="button-account" onclick="clickNew()">
+                    New <i class="fas fa-plus-circle"></i>
+                </button>
+                <button type="button" id="bEndorsement" class="button-account" onclick="clickEndorsement()">
+                    Endorsement <i class="fas fa-exchange-alt"></i>
+                </button>   
+                <button type="button" id="bRequestProcess" class="button-account" onclick="clickRequestProcess()">
+                    Request
+                    Process <i class="fas fa-hand-pointer"></i>
+                </button>
+                <button type="button" id="bRenewal" class="button-account" onclick="clickRenewal()">
+                    Renewal <i class="fas fa-sync-alt"></i>
+                </button>
+                <button type="button" id="bAssingToMe" class="button-account" onclick="clickAssign()">
+                    Assign to me <i class="fas fa-user"></i>
+                </button>
+
+                <button type="button" id="bTeamManager" class="button-account" data-toggle="dropdown" aria-haspopup="true"
+                        aria-expanded="false" disabled>
+                    Change Broker <i class="fas fa-angle-down"></i>
+                </button>
+                <div class="dropdown-menu" id="oTeamManager"></div>
+                <button type="button" id="bNTU" class="button-account" onclick="clickNTU()">
+                    NTU <i class="far fa-times-circle"></i>
+                </button>
+                <button id="bGoHome" type="button" class="button-account" onclick="goHome()">
+                    <i class="fas fa-home"></i>
+                </button>
+                <button id="bRefresh" type="button" class="button-account" onclick="refreshPage()">
+                    <i class="fas fa-sync"></i>
+                </button>
+
+            </div>
+            <div class="img-container-willis">
+                <img src="../SiteAssets/img/logo.png" class="img-header-willis" alt="Alternate Text" />
+            </div>
+        </div>
+    </div>
+    <table class="table">
+        <tbody>
+            <tr class="card-columns">
+                <td class="cardContent">
+                    <div class="cardBody">
+                        <div class="">
+                            <p class="cardImg">5000</p>
+                        </div>
+                    </div>
+                    <div class="cardFooter">
+                        <p class="cardTitle">Total Accounts</p>
+                    </div>
+                </td>
+                <td class="cardContent">
+                    <div class="cardBody">
+                        <div class="">
+                            <p class="cardImg">0479</p>
+                        </div>
+                    </div>
+                    <div class="cardFooter">
+                        <p class="cardTitle">Accounts in process</p>
+                    </div>
+                </td>
+                <td class="cardContent">
+                    <div class="cardBody">
+                        <div class="">
+                            <p class="cardImg">0092</p>
+                        </div>
+                    </div>
+                    <div class="cardFooter">
+                        <p class="cardTitle">New Accounts</p>
+                    </div>
+                </td>
+                <td class="cardContent">
+                    <div class="cardBody">
+                        <div class="">
+                            <p class="cardImg">0017</p>
+                        </div>
+                    </div>
+                    <div class="cardFooter">
+                        <p class="cardTitle">My Accounts</p>
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<div>
+    
+    <div style="margin-top: 1%;">
+        <div id="bFilters"></div>
+        <div class="filters-bar-clear">
+            <button type="button" class="btn btn-info btn-sm button-subcommands" onclick="clickClearFilters()">
+                Clear
+                Filters
+            </button>
+        </div>
+        <div class="table-responsive">
+            <table id="dtAccounts" class="table table-hover table-bordered">
+                <thead class="thead-light">
+                    <tr id="dtSelect"></tr>
+                    <tr id="dtHeader"></tr>
+                </thead>
+                <tbody id="tAccounts"></tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div class="modal" id="modalInfo">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="modalInfoTitle"></h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body" id="modalInfoBody"></div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<div class="modal fade" id="modalSummary" aria-hidden="true" style="opacity: initial; overflow: auto;">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header popup-header">
+                <h1 class="modal-title">Process Summary </h1>
+                <button type="button" class="close" aria-label="Close" data-dismiss="modal">
+                    <span aria-hidden="true">X</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-5">
+                        <div class="modal-label-content-info">
+                            <label class="title-section">Account/Endorsement Information</label>
+                        </div>
+                        <div class="modal-label-content-info">
+                            <label class="modal-label-title">Reference</label><br>
+                            <a class="modal-label-info" id="mSummaryReference"></a>
+                        </div>
+                        <div class="modal-label-content-info">
+                            <label class="modal-label-title">Insured</label><br>
+                            <label class="modal-label-info" id="mSummaryInsured"></label>
+                        </div>
+                        <!--<div class="modal-label-content-info">
+                            <label class="modal-label-title">Business line</label><br>
+                            <label class="modal-label-info" id="mSummaryBusinessLine"></label>
+                        </div>-->
+                        <div class="modal-label-content-info">
+                            <label class="modal-label-title">Client</label><br>
+                            <label class="modal-label-info" id="mSummaryClient"></label>
+                        </div>
+                        <div class="modal-label-content-info">
+                            <label class="modal-label-title">Inception date</label><br>
+                            <label class="modal-label-info" id="mSummaryInception"></label>
+                        </div>
+                        <div class="modal-label-content-info">
+                            <label class="modal-label-title">Broker assigned</label><br>
+                            <label class="modal-label-info" id="mSummaryBroker"></label>
+                        </div>
+
+                        <div class="modal-label-content-info" id="divSummaryReason">
+                            <label class="modal-label-title">Process status motive</label><br>
+                            <label class="modal-label-info" id="mSummaryReason"></label>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="modal-label-content-info">
+                            <label class="title-section">Current Tasks Process</label>
+                        </div>
+                        <div class="modal-label-content-info">
+                            <label class="modal-label-title">Process status: </label>
+                            <label class="modal-label-info" id="mSummaryStatus"></label><br />
+                            <label class="modal-label-title">Due Date: </label>
+                            <label class="modal-label-info" id="mSummaryDueDate"></label>
+                        </div>
+                        <div class="modal-label-content-info">
+                            <h4 class="title-branch"><i class="fa fa-cogs" aria-hidden="true"></i>  Billing Process </h4>
+                            <br />
+                            <label class="modal-label-title" id="mSummaryBillingFlowType"></label>
+                            <label class="modal-label-info" id="mSummaryBillingTaskStatus"></label><br />
+                            <label class="modal-label-title">Assigned To: </label>
+                            <label class="modal-label-info" id="mSummBillingAssignedTo"></label>
+                        </div>
+                        <div class="modal-label-content-info" id="divSummaryBillingTaskStatusReason">
+                            <label class="modal-label-title">Task status motive: </label>
+                            <label class="modal-label-info" id="mSummaryBillingTaskStatusReason"></label>
+                        </div>
+                        <div class="modal-label-content-info" id="mSummaryBillingTaskComment">
+                            <label class="modal-label-info"></label>
+                        </div>
+                        <!--<div class="div-separator"></div>-->
+                        <div class="modal-label-content-info">
+                            <h4 class="title-branch"><i class="fa fa-cogs" aria-hidden="true"></i>  EoC Process </h4>
+                            <br />
+                            <label class="modal-label-title" id="mSummaryEoCFlowType"></label>
+                            <label class="modal-label-info" id="mSummaryEoCTaskStatus"></label><br />
+                            <label class="modal-label-title">Assigned To: </label>
+                            <label class="modal-label-info" id="mSummEoCAssignedTo"></label>
+                        </div>
+                        <div class="modal-label-content-info" id="divSummaryEoCTaskStatusReason">
+                            <label class="modal-label-title">Task status motive: </label>
+                            <label class="modal-label-info" id="mSummaryEoCTaskStatusReason"></label>
+                        </div>
+                        <div class="modal-label-content-info">
+                            <label class="modal-label-info" id="mSummaryEoCTaskComment"></label>
+                        </div>
+                        <div class="modal-label-content-info">
+                            <h4 class="title-branch"><i class="fa fa-comments" aria-hidden="true"></i>  Comments </h4>
+                        </div>
+                        <div class="modal-comments-summary" id="mSummaryComments"></div>
+                    </div>
+                </div>
+
+                <div id="divSummaryDocuments">
+                    <div href="#collapseDocuments" data-toggle="collapse" class="eocStatusHeader">
+                        <div class="eocTitleHeader" style="cursor: pointer;">
+                            <label style="cursor: pointer;">Documents Information</label>
+                            <i class="fas fa-sort-down">
+
+                            </i>
+                        </div>
+                    </div>
+                    <div id="collapseDocuments" class="collapse documents-info-summary">
+                        <div class="row list-documents">
+                            <div class='col'>Title Document</div><div class='col'>N/A</div><div class='col'>Pending</div><div class='col'>OK</div>
+                        </div>
+                        <ul id="documentList" class="list-group">
+                        </ul>
+
+                    </div>
+                </div>
+
+                <div id="divSummaryEndorsements">
+                    <div class="eocStatusHeader">
+                        <div class="eocTitleHeader">
+                            <label>Endorsements Summary</label>
+                        </div>
+                    </div>
+                </div>
+                <div id="divSummaryProcessLog">
+                    <div href="#collapseProcessLog" data-toggle="collapse" class="eocStatusHeader">
+                        <div class="eocTitleHeader" style="cursor: pointer;">
+                            <label style="cursor: pointer;">Process Log</label>
+                            <i class="fas fa-sort-down"></i>
+                        </div>
+                    </div>
+                    <div id="collapseProcessLog" class="collapse"></div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="button-modal" data-dismiss="modal" onclick="ClickCancelSummary('Accounts')">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal" id="loadMe" tabindex="-1" role="dialog" aria-labelledby="ModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-body modal-LoadMe">
+            <div class="loader spinner-border"></div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="errorMsgModal" aria-hidden="true" style="opacity: initial; overflow: auto;">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header popup-header">
+                <h5 class="modal-title">System Message</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p id="error"></p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="../SiteAssets/js/Sinaptic.Willis.Accounts.js"></script>
+<script src="../SiteAssets/js/Sinaptic.Willis.Service.js"></script>
+
+</html>

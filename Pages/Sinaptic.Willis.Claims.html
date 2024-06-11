@@ -1,0 +1,474 @@
+﻿<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <script src="../SiteAssets/js/jquery-3.4.1.min.js"></script>
+
+    <script src="../SiteAssets/js/popper.min.js"></script>
+
+    <script src="../SiteAssets/js/bootstrap.min.js"></script>
+
+    <script src="../SiteAssets/js/DataTables/datatables.min.js"></script>
+
+    <script src="../SiteAssets/js/DataTables/vfs_fonts.js"></script>
+
+    <script src="../SiteAssets/js/DataTables/pdfmake.min.js"></script>
+
+    <script src="../SiteAssets/js/DataTables/jszip.min.js"></script>
+
+
+    <script src="../SiteAssets/js/DataTables/DataTables-1.10.20/js/jquery.dataTables.min.js"></script>
+
+    <script src="../SiteAssets/js/DataTables/Buttons-1.6.1/js/dataTables.buttons.min.js"></script>
+
+    <script src="../SiteAssets/js/DataTables/Buttons-1.6.1/js/buttons.flash.min.js"></script>
+
+    <script src="../SiteAssets/js/DataTables/Buttons-1.6.1/js/buttons.html5.min.js"></script>
+
+    <script src="../SiteAssets/js/DataTables/Buttons-1.6.1/js/buttons.print.min.js"></script>
+
+    <script src="../SiteAssets/js/Dropzone/dropzone.js"></script>
+
+    <script>
+        function agregarMetaEtiquetas() {
+            var metaCacheControl = document.createElement('meta');
+            var metaPragma = document.createElement('meta');
+            var metaExpires = document.createElement('meta');
+
+            metaCacheControl.setAttribute('http-equiv', 'Cache-Control');
+            metaCacheControl.setAttribute('content', 'no-cache, no-store, must-revalidate');
+            metaPragma.setAttribute('http-equiv', 'Pragma');
+            metaPragma.setAttribute('content', 'no-cache');
+            metaExpires.setAttribute('http-equiv', 'Expires');
+            metaExpires.setAttribute('content', '0');
+
+            var head = document.head || document.getElementsByTagName('head')[0];
+
+            head.appendChild(metaCacheControl);
+            head.appendChild(metaPragma);
+            head.appendChild(metaExpires);
+        }
+
+        agregarMetaEtiquetas();
+    </script>
+
+    <link rel="stylesheet" href="../SiteAssets/css/bootstrap.min.css">
+
+    <link rel="stylesheet" href="../SiteAssets/css/FontAwesome/css/all.min.css">
+
+    <link rel="stylesheet" href="../SiteAssets/css/Sinaptic.Willis.General.css">
+
+    <link rel="stylesheet" href="../SiteAssets/js/DataTables/datatables.min.css">
+
+    <link rel="stylesheet" href="../SiteAssets/js/DataTables/Buttons-1.6.1/css/buttons.dataTables.min.css">
+
+    <link rel="stylesheet" href="../SiteAssets/js/Dropzone/dropzone.css">
+
+    <title>My Claims</title>
+
+</head>
+<div class="screen-header">
+    <div class="row row-buttons">
+        <div class="general-header">
+
+            <div class="screen-subtitle"> My Claims</div>
+            <div class="account-commands">
+                <div class="btn-group">
+                    <button type="button" id="bNewClaim" class="button-general" onclick="clickNewClaim()" disabled>
+                        New Claim <i class="fas fa-plus-circle"></i>
+                    </button>
+                </div>
+                <div class="btn-group">
+                    <button type="button" id="bCreateTask" class="button-general" data-toggle="dropdown"
+                        aria-haspopup="true" aria-expanded="false" disabled>
+                        Create Task <i class="fas fa-angle-down"></i>
+                    </button>
+                    <div class="dropdown-menu" id="oFlowType"></div>
+                </div>
+                <!-- <button type="button" id="bRequestProcess" class="button-general"> Request Process <i
+            class="fas fa-hand-pointer"></i></button>
+    <button type="button" id="bRenewal" class="button-general" onclick="clickRenewal()"> Renewal <i
+            class="fas fa-sync-alt"></i></button> -->
+                <div class="btn-group">
+                    <button type="button" id="bAssingToMe" class="button-general" onclick="clickAssign()" disabled>
+                        Assign to me <i class="fas fa-user"></i>
+                    </button>
+                </div>
+                <!-- <button type="button" id="bNTU" class="button-general" onclick="clickNTU()"> NTU <i
+    class="far fa-times-circle"></i></button> -->
+                <div class="btn-group">
+                    <button type="button" id="bProcessRequestUser" class="button-general" data-toggle="dropdown"
+                        aria-haspopup="true" aria-expanded="false" disabled>
+                        Change Claim Handler <i class="fas fa-angle-down"></i>
+                    </button>
+                    <div class="dropdown-menu" id="oUser"></div>
+                </div>
+                <div class="btn-group">
+                    <button id="bGoHome" type="button" class="button-general" onclick="goHome()">
+                        <i class="fas fa-home"></i>
+                    </button>
+                </div>
+                <div class="btn-group">
+                    <button id="bRefresh" type="button" class="button-account" onclick="refreshPage()">
+                        <i class="fas fa-sync"></i>
+                    </button>
+                </div>
+
+            </div>
+            <div class="img-container-willis">
+                <img src="../SiteAssets/img/logo.png" class="img-header-willis" alt="Alternate Text" />
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<div>
+    <div style="margin-top: 1%;">
+        <div id="bFilters"></div>
+        <div style="margin-bottom: 5px; text-align: end;">
+            <button type="button" class="btn btn-info btn-sm button-subcommands" onclick="clickClearFilters()">
+                Clear
+                Filters
+            </button>
+        </div>
+        <div class="table-responsive">
+            <table id="dtClaims" class="table table-hover table-bordered">
+                <thead class="thead-light">
+                    <tr id="dtSelect"></tr>
+                    <tr id="dtHeader"></tr>
+                </thead>
+                <tbody id="tClaims"></tbody>
+            </table>
+        </div>
+    </div>
+    <div class="section-account">
+        <div style="margin-top: 0%;">
+            <h3 style="color: #760daf;">Accounts</h3>
+        </div>
+        <div class="row-buttons">
+            <div class="btn-group">
+                <input type="text" id="searchAccounts" placeholder="Search accounts by reference or by original insured"
+                    style="width:500px" aria-label="Search" />
+                <span class="input-group-text search-btn" onclick="clickSearchAccounts()"
+                    style="display: inline-flex; cursor: pointer;">
+                    <i class="fas fa-search text-grey" aria-hidden="true"></i>
+                </span>
+            </div>
+        </div>
+        <div class="row-buttons">
+            <div class="btn-group filter-options">
+                <label>
+                    <input type="radio" name="optSearchOnMyAccountsFilter" value="byReference" checked>
+                    <span>By reference</span>
+                </label>
+                <label>
+                    <input type="radio" name="optSearchOnMyAccountsFilter" value="byOriginalInsured">
+                    <span>By original insured</span>
+                </label>
+            </div>
+        </div>
+        <div style="margin-top: 0%;">
+            <div class="table-responsive">
+                <table id="dtAccounts" class="table table-hover table-bordered">
+                    <thead class="thead-light">
+                        <tr>
+                            <th>Reference</th>
+                            <th>Original Insured</th>
+                            <th>Client</th>
+                            <th>Inception</th>
+                            <th>Business Line</th>
+                            <th>Status</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody id="tAccounts"></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal" id="modalTask" aria-hidden="true" style="opacity: initial; overflow-y:auto;">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header popup-header">
+                <h1 class="modal-title">Task Claim</h1>
+                <button type="button" class="close" aria-label="Close" data-dismiss="modal"
+                    onclick="ClickModalCancel()">
+                    <span aria-hidden="true">X</span>
+                </button>
+            </div>
+            <div class="modal-body">
+
+                <div class="form-group" id="sectionClosureReason">
+                    <div class="modal-select" style="margin: 0%;">
+                        <label>Closure Reason</label><br>
+                        <select id="closureReason" class="form-control input-willis"></select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+
+                    <div id="divDropzone">
+                        <!--<formdropzone type="file" webkitdirectory="true" action="#" id="dropzoneTask"
+                  class="dropzone dz-clickable" style="display: contents;">
+        <div class="dz-default dz-message">
+            <span>Drag or click to select the file to upload</span>
+        </div>
+    </formdropzone>-->
+                        <div id="dropzoneTask" class="dropzone"></div>
+                        <div style="text-align: center;">
+                            <!--<button id="bUploadFile" type="button" class="button-file"> Upload File </button>-->
+                            <button id="bDiscardFile" type="button" class="button-file"> Discard File </button>
+                        </div>
+                    </div>
+
+                    <!-- <div class="form-group" id="mClaimedAmount">
+                        <div class="modal-select">
+                            <label>Claimed Amount</label><br>
+                            <input type="text" class="form-control input-willis" id="claimedAmount" style="margin: 0px;">
+                        </div>
+                    </div> -->
+
+                    <div class="form-group required row" id="mClaimedAmount" style="padding-top: 1rem;">
+
+                        <div class="col-sm-6">
+                            <label>Claimed amount</label>
+                            <input type="text" id="claimedAmount" class="form-control input-willis"
+                                onchange="formatMoney()">
+
+                        </div>
+                        <div class="col-sm-6" id="divCurrency">
+                            <label for="currency">Currency</label>
+                            <input type="text" id="currency" class="form-control input-willis" disabled></select>
+                        </div>
+
+                    </div>
+
+                    <div class="form-group" id="mDateOfLoss">
+                        <div class="modal-select">
+                            <label>Date Of Loss</label><br>
+                            <input type="date" class="form-control input-willis" id="dateOfLoss" style="margin: 0px;">
+                        </div>
+                    </div>
+                    <!--<div class="form-group" id="miReportDate">
+                        <div class="modal-select">
+                            <label>Report Date</label><br>
+                            <input type="date" class="form-control input-willis" id="iReportDate" style="margin: 0px;">
+                        </div>
+                    </div>
+                    <div class="form-group" id="mCause">
+                        <div class="modal-select">
+                            <label>Cause</label><br>
+                            <input type="text" class="form-control input-willis" id="cause" style="margin: 0px;">
+                        </div>
+                    </div>
+                    <div class="form-group" id="mReferenceGrantor">
+                        <div class="modal-select">
+                            <label>Cedent Reference</label><br>
+                            <input type="text" class="form-control input-willis" id="referenceGrantor" style="margin: 0px;">
+                        </div>
+                    </div>-->
+                    <div class="form-group" id="mDescription">
+                        <div class="modal-select">
+                            <label>Comments</label><br>
+                            <textarea class="form-control input-willis" id="description"></textarea>
+                        </div>
+                    </div>
+                    <!--<div class="form-group" id="mAmount">
+                        <div class="modal-select">
+                            <label>Amount</label><br>
+                            <input type="number" class="form-control input-willis" id="amount" style="margin: 0px;">
+                        </div>
+                    </div>
+                    <div class="form-group" id="mPercent">
+                        <div class="modal-select">
+                            <label>Percent</label><br>
+                            <input type="number" class="form-control input-willis" id="percent" style="margin: 0px;">
+                        </div>
+                    </div>
+                    <div class="form-check" id="mAttachedSupportingDoc">
+                        <div class="modal-select">
+
+                            <input type="checkbox" class="form-check-input" id="attachedSupportingDoc">
+                            <label class="form-check-label" style="margin-left: 22px;" for="attachedSupportingDoc">Attached Suporting Document</label>
+                        </div>
+                    </div>
+                    <div class="form-group" id="mParticipationPercentage">
+                        <div class="modal-select">
+                            <label>Participation Percentage</label><br>
+                            <input type="number" class="form-control input-willis" id="participationPercentage" style="margin: 0px;">-->
+                    <!--</div>
+                    </div>-->
+                    <!--<div class="form-group" id="mAmountRecover">
+                        <div class="modal-select">
+                            <label>Amount Recover Cedent</label><br>
+                            <input type="number" class="form-control input-willis" id="amountRecover" style="margin: 0px;">
+                        </div>
+                    </div>-->
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button id="bModalSave" type="button" class="button-modal" onclick="ClickModalSaveTask()">Save</button>
+                <button type="button" class="button-modal" data-dismiss="modal" onclick="ClickModalCancel()">
+                    Cancel
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modalSummary" aria-hidden="true" style="opacity: initial; overflow: auto;">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header popup-header">
+                <h1 class="modal-title">Claim Summary</h1>
+                <button type="button" class="close" aria-label="Close" data-dismiss="modal">
+                    <span aria-hidden="true">X</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-5">
+
+                        <div class="modal-label-content-info">
+                            <label class="title-section">Claim Information</label>
+                        </div>
+                        <div class="modal-label-content-info">
+                            <label class="modal-label-title">Claim reference</label><br>
+                            <a href="#" class="modal-label-info" id="mSummaryReference"></a>
+                        </div>
+                        <div class="modal-label-content-info">
+                            <label class="modal-label-title">Business Reference</label><br>
+                            <a href="#" class="modal-label-info" id="mSummaryBusinessReference"></a>
+                        </div>
+                        <div class="modal-label-content-info">
+                            <label class="modal-label-title">Reinsured</label><br>
+                            <label class="modal-label-info" id="mSummaryReinsured"></label>
+                        </div>
+                        <div class="modal-label-content-info">
+                            <label class="modal-label-title">Client</label><br>
+                            <label class="modal-label-info" id="mSummaryClient"></label>
+                        </div>
+                        <div class="modal-label-content-info">
+                            <label class="modal-label-title">Description</label><br>
+                            <label class="modal-label-info" id="mSummaryDescription"></label>
+                        </div>
+                        <div class="modal-label-content-info">
+                            <label class="modal-label-title">Ocurrence date</label><br>
+                            <label class="modal-label-info" id="mSummaryOcurrenceDate"></label>
+                        </div>
+                        <div class="modal-label-content-info">
+                            <label class="modal-label-title">Business line</label><br>
+                            <label class="modal-label-info" id="mSummaryBusinessLine"></label>
+                        </div>
+                        <div class="modal-label-content-info">
+                            <label class="modal-label-title">Cedent Reference</label><br>
+                            <label class="modal-label-info" id="mSummaryCedentReference"></label>
+                        </div>
+
+                    </div>
+                    <div class="col">
+                        <div class="modal-label-content-info" id="divSummaryCurrentTasks">
+                            <div class="modal-label-content-info">
+                                <label class="title-section">History Tasks and Comments</label>
+                            </div>
+
+                            <div id="claimTasks">
+
+                                <table id="dtAllClaimTasks" class="table table-hover table-bordered">
+                                    <thead class="thead-light">
+                                        <tr>
+                                            <th>ID</th>
+                                            <th>Task Name</th>
+                                            <th>Modified Date</th>
+                                            <th>Assigned To</th>
+                                            <th>Status</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="tAllTaskClaims"></tbody>
+                                </table>
+
+                            </div>
+                        </div>
+                        <div class="modal-label-content-info">
+                            <h4 class="title-branch"><i class="fa fa-comments" aria-hidden="true"></i> Comments </h4>
+                        </div>
+                        <div class="modal-comments-summary" id="mSummaryComments"></div>
+                    </div>
+                </div>
+                <div id="divSummaryProcessLog">
+                    <div href="#collapseProcessLog" data-toggle="collapse" class="eocStatusHeader">
+                        <div class="eocTitleHeader" style="cursor: pointer;">
+                            <label style="cursor: pointer;">Process Log</label>
+                            <i class="fas fa-sort-down"></i>
+                        </div>
+                    </div>
+                    <div id="collapseProcessLog" class="collapse"></div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="button-modal" data-dismiss="modal" onclick="ClickCancelSummary('Claims')">
+                    Cancel
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal" id="loadMe" tabindex="-1" role="dialog" aria-labelledby="ModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-body modal-LoadMe">
+            <div class="loader spinner-border"></div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="errorMsgModal" aria-hidden="true" style="opacity: initial; overflow: auto;">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header popup-header">
+                <h5 class="modal-title">System Message</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p id="error"></p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="mConfirm" tabindex="-1" role="dialog" aria-labelledby="ModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header popup-header">
+                <h5 class="modal-title">Confirm</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" id="mMsjConfirmar"></div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal" id="modal-btn-yes">Yes</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal" id="modal-btn-no">No</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="../SiteAssets/js/Sinaptic.Willis.Claims.js"></script>
+<script src="../SiteAssets/js/Sinaptic.Willis.ClaimTaskService.js"></script>
+<script src="../SiteAssets/js/Sinaptic.Willis.Service.js"></script>
+
+</html>

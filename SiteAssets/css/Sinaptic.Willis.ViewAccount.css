@@ -1,0 +1,176 @@
+.button-account:hover {
+   background-color: purple;    
+}
+
+.accounts-header {
+    width: 100%;
+    height: 82px;
+    margin-left: 3%;
+    margin-right: 3%;
+    padding-left: 10px;
+    background-color: #460454;
+}
+
+#s4-titlerow {
+    display: none !important;
+}
+
+.button-filter {
+    background-color: white;
+    color: #760daf;
+}
+
+.button-filter:hover {
+   background-color: whitesmoke;
+   border-color: #760daf;
+}
+
+.row-info-account {
+    margin-top: 2%;
+    display: -webkit-inline-box;
+    -webkit-box-align: center;
+}
+
+.icon-eye {
+    font-size: 25px;
+    color: #760daf;
+}
+
+.info-account {
+    color: #760daf !important;
+    margin-left: 10%;
+    font-size: 25px;
+}
+
+.row {
+  display: flex;
+}
+
+.column {
+  flex: 50%;
+  height: fit-content;
+}
+
+.table-information {
+    border: hidden;
+    margin-left: 5%;
+}
+
+.info {
+    margin-top: 2%;
+}
+
+.input-form {
+        width: 60% !important;
+    height: 33px;
+    font-size: 13px;
+    border-radius: 3px;
+}
+
+.col-grl {
+    margin-right: 13%;
+    margin-left: 18%;
+    background-color: #e6ecee;
+    padding-right: 4%;
+}
+
+.column-grl {
+    margin-left: 5%;
+    margin-right: 0%;
+}
+
+.title-col {
+    color: #444444 !important;
+    border-bottom: solid;
+    border-bottom-width: 1px;
+    padding-top: 13px;
+    font-weight: 400;
+}
+
+.table-endorsement {
+    text-align: center;
+    color: #760daf !important;
+    border-bottom-width: 3px;
+    border-bottom-style: solid;
+}
+
+.button-action {
+    background-color: #760daf;
+    border: none;
+    color: white;
+    padding: 12px 16px;
+    font-size: 16px;
+    cursor: pointer;
+    margin-right: 2%;
+ }
+
+.button-action:hover {
+   background-color: purple;
+}
+
+.row-action {
+    margin-top: 2%;
+    margin-left: 35%;
+}
+
+.button-file {
+    background-color: #760daf;
+    border: none;
+    color: white;
+    padding: 12px 16px;
+    margin-top: 2%;
+}
+
+.button-file:hover {
+   background-color: purple;
+}
+
+.button-attach {
+    background-color: #760daf;
+    border: none;
+    color: white;
+}
+
+.button-attach:hover {
+   background-color: purple;
+}
+
+.button-icon {
+    color: #760daf;
+    font-size: large;
+    margin-left: 15%;
+    cursor: pointer;
+}
+#tRelatedDocuments .button-icon {
+margin:0% 1% 0% 0%;
+padding-left: 10px;
+
+}
+
+#bNTU {
+    background-color: #9d0000 !important;
+}
+
+.filters-bar-clear {
+    margin-bottom: 5px;
+    text-align: end;
+    position: inherit;
+    width: 15%;
+    float: right;
+}
+
+
+.view-account-commands {
+    width: 90%;
+    padding-left: 211px;
+    float: left;
+}
+
+.row-content-header{
+
+    padding-bottom:20px;
+}
+
+select.form-control {
+    -webkit-appearance: menulist !important;
+}
